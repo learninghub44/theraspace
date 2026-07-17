@@ -3,8 +3,12 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+<<<<<<< HEAD
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle } from "lucide-react"
 import { supabase, getSiteUrl } from "@/app/lib/supabase"
+=======
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, Sparkles, CheckCircle2 } from "lucide-react"
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -15,6 +19,7 @@ export default function SignupPage() {
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+<<<<<<< HEAD
   const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,6 +62,15 @@ export default function SignupPage() {
       return
     }
 
+=======
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (password !== confirmPassword) return
+    setIsLoading(true)
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+    setIsLoading(false)
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
     setIsSuccess(true)
   }
 
@@ -117,6 +131,7 @@ export default function SignupPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+<<<<<<< HEAD
             {error && (
               <div className="flex items-start gap-2 px-4 py-3 rounded-xl bg-thera-danger/10 border border-thera-danger/30 text-sm text-thera-danger">
                 <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -124,6 +139,8 @@ export default function SignupPage() {
               </div>
             )}
 
+=======
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
               <div className="relative">

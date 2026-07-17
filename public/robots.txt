@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mytherapist.christech.co.ke/sitemap.xml

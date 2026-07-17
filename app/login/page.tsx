@@ -3,8 +3,12 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+<<<<<<< HEAD
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, Sparkles, AlertCircle } from "lucide-react"
 import { supabase, APP_DASHBOARD_URL } from "@/app/lib/supabase"
+=======
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, Sparkles } from "lucide-react"
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -12,6 +16,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+<<<<<<< HEAD
   const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,6 +50,15 @@ export default function LoginPage() {
       void rememberMe
       window.location.href = APP_DASHBOARD_URL
     }
+=======
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    // Simulate login
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+    setIsLoading(false)
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
   }
 
   return (
@@ -82,6 +96,7 @@ export default function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
+<<<<<<< HEAD
             {error && (
               <div className="flex items-start gap-2 px-4 py-3 rounded-xl bg-thera-danger/10 border border-thera-danger/30 text-sm text-thera-danger">
                 <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -89,6 +104,8 @@ export default function LoginPage() {
               </div>
             )}
 
+=======
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
               <div className="relative">
@@ -137,7 +154,11 @@ export default function LoginPage() {
                 <span className="text-sm text-thera-muted">Remember me</span>
               </label>
               <Link
+<<<<<<< HEAD
                 href="/forgot-password"
+=======
+                href="#"
+>>>>>>> 9ba056eafbe32fad3846a4def7e331f69f81147c
                 className="text-sm text-thera-primary hover:text-thera-secondary transition-colors"
               >
                 Forgot password?
