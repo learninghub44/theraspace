@@ -179,7 +179,7 @@ export function HeroSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-thera-primary opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-thera-primary" />
                 </span>
-                <span className="text-thera-primary font-medium">Now with Groq AI</span>
+                <span className="text-thera-primary font-medium">Built for African Therapists</span>
               </div>
             </motion.div>
 
@@ -223,17 +223,17 @@ export function HeroSection() {
               </div>
               <div className="flex items-center gap-2 text-sm text-thera-muted">
                 <Users className="w-4 h-4 text-thera-primary" />
-                <span>500+ Therapists</span>
+                <span>50+ Therapists</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-thera-muted">
                 <Zap className="w-4 h-4 text-thera-accent" />
-                <span>AI Powered</span>
+                <span>KES 1,000/month</span>
               </div>
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star key={star} className="w-4 h-4 text-thera-warning fill-thera-warning" />
                 ))}
-                <span className="text-sm text-thera-muted ml-1">4.9/5</span>
+                <span className="text-sm text-thera-muted ml-1">4.2/5</span>
               </div>
             </motion.div>
           </motion.div>

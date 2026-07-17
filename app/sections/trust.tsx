@@ -51,11 +51,11 @@ function AnimatedCounter({ value, suffix, delay }: { value: number; suffix: stri
 }
 
 const stats = [
-  { icon: Users, value: 2480, suffix: "+", label: "Clients Managed", delay: 0 },
-  { icon: Calendar, value: 14290, suffix: "+", label: "Appointments", delay: 100 },
-  { icon: FileText, value: 38920, suffix: "+", label: "AI Notes Generated", delay: 200 },
-  { icon: Clock, value: 15600, suffix: "+", label: "Hours Saved", delay: 300 },
-  { icon: Globe, value: 12, suffix: "", label: "Countries", delay: 400 },
+  { icon: Users, value: 30, suffix: "+", label: "Clients Managed", delay: 0 },
+  { icon: Calendar, value: 850, suffix: "+", label: "Appointments", delay: 100 },
+  { icon: FileText, value: 300, suffix: "+", label: "AI Notes Generated", delay: 200 },
+  { icon: Clock, value: 450, suffix: "+", label: "Hours Saved", delay: 300 },
+  { icon: Globe, value: 3, suffix: "", label: "Countries", delay: 400 },
 ]
 
 const trustedBy = [
@@ -106,7 +106,7 @@ export function TrustSection() {
               className="relative group"
             >
               <div className="p-6 lg:p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-thera-primary/30 transition-all duration-500 hover:-translate-y-1">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <div className="w-3 h-3 rounded-xl bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <stat.icon className="w-6 h-6 text-thera-primary" />
                 </div>
                 <div className="text-3xl lg:text-4xl font-bold mb-2">
