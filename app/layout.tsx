@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Fraunces, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/app/components/theme-provider"
 import { Navbar } from "@/app/components/navbar"
@@ -8,6 +8,19 @@ import { Footer } from "@/app/components/footer"
 const inter = Inter({ 
   subsets: ["latin"],
   variable: "--font-sans",
+})
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-data",
+  weight: ["500"],
 })
 
 export const metadata: Metadata = {
@@ -72,7 +85,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#030712" />
+        <meta name="theme-color" content="#0E1712" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -99,7 +112,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${inter.variable} ${fraunces.variable} ${plexMono.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
           <main>{children}</main>

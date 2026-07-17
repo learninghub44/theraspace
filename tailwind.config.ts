@@ -44,16 +44,17 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         thera: {
-          primary: "#4F46E5",
-          secondary: "#7C3AED",
-          accent: "#06B6D4",
-          bg: "#030712",
-          card: "#111827",
-          text: "#FFFFFF",
-          muted: "#9CA3AF",
-          success: "#22C55E",
-          warning: "#F59E0B",
-          danger: "#EF4444",
+          primary: "#E7A339",
+          secondary: "#2F5C4B",
+          accent: "#8FB08A",
+          ember: "#D9834F",
+          bg: "#0E1712",
+          card: "#17211B",
+          text: "#F4EEE1",
+          muted: "#9BA396",
+          success: "#6FA36B",
+          warning: "#D98F3D",
+          danger: "#E1614F",
         },
       },
       borderRadius: {
@@ -63,6 +64,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        data: ["var(--font-data)", "monospace"],
       },
       keyframes: {
         "accordion-down": {
@@ -92,6 +95,10 @@ const config: Config = {
           "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
           "100%": { transform: "translate(0px, 0px) scale(1)" },
         },
+        "breathe": {
+          "0%, 100%": { transform: "scale(1)", opacity: "0.5" },
+          "50%": { transform: "scale(1.06)", opacity: "0.9" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -100,6 +107,7 @@ const config: Config = {
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
         "gradient-shift": "gradient-shift 8s ease infinite",
         "blob": "blob 7s infinite",
+        "breathe": "breathe 6s ease-in-out infinite",
       },
     },
   },

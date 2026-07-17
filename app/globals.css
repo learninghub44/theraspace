@@ -65,7 +65,7 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #06B6D4 100%);
+    background-image: linear-gradient(100deg, #E7A339 0%, #D9834F 50%, #8FB08A 100%);
   }
 
   .glass {
@@ -77,21 +77,21 @@
   }
 
   .glow-primary {
-    box-shadow: 0 0 40px rgba(79, 70, 229, 0.3), 0 0 80px rgba(79, 70, 229, 0.1);
+    box-shadow: 0 0 40px rgba(231, 163, 57, 0.25), 0 0 80px rgba(231, 163, 57, 0.08);
   }
 
   .glow-accent {
-    box-shadow: 0 0 40px rgba(6, 182, 212, 0.3), 0 0 80px rgba(6, 182, 212, 0.1);
+    box-shadow: 0 0 40px rgba(143, 176, 138, 0.25), 0 0 80px rgba(143, 176, 138, 0.08);
   }
 
   .gradient-border {
     position: relative;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED, #06B6D4);
+    background: linear-gradient(100deg, #E7A339, #D9834F, #8FB08A);
     padding: 1px;
   }
 
   .gradient-border-inner {
-    background: #111827;
+    background: #17211B;
     border-radius: inherit;
   }
 
@@ -112,6 +112,31 @@
     opacity: 0.03;
     pointer-events: none;
     z-index: 0;
+  }
+
+  /* Signature motif: concentric "breathing" rings, standing in for the
+     generic blurred-blob backgrounds. Ties back to the brief — giving
+     therapists breathing room. */
+  .breathing-rings {
+    background-image:
+      repeating-radial-gradient(
+        circle at center,
+        rgba(231, 163, 57, 0.14) 0px,
+        rgba(231, 163, 57, 0.14) 1px,
+        transparent 1px,
+        transparent 64px
+      );
+  }
+
+  .breathing-rings-sage {
+    background-image:
+      repeating-radial-gradient(
+        circle at center,
+        rgba(143, 176, 138, 0.16) 0px,
+        rgba(143, 176, 138, 0.16) 1px,
+        transparent 1px,
+        transparent 64px
+      );
   }
 
   .scrollbar-hide::-webkit-scrollbar {

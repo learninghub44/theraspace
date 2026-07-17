@@ -5,21 +5,12 @@ import Link from "next/link"
 import { ArrowRight, Play, Shield, Users, Zap, Star } from "lucide-react"
 import { fadeInUp, staggerContainer, viewportConfig } from "@/app/lib/animations"
 
-function AnimatedBlob({ className, delay = 0 }: { className: string; delay?: number }) {
+function BreathingRings() {
   return (
     <motion.div
-      animate={{
-        scale: [1, 1.2, 1],
-        x: [0, 30, -20, 0],
-        y: [0, -50, 20, 0],
-      }}
-      transition={{
-        duration: 7,
-        repeat: Infinity,
-        delay,
-        ease: "easeInOut",
-      }}
-      className={className}
+      animate={{ scale: [1, 1.04, 1], opacity: [0.6, 0.9, 0.6] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full breathing-rings pointer-events-none"
     />
   )
 }
@@ -75,7 +66,7 @@ function DashboardMockup() {
               ].map((stat) => (
                 <div key={stat.label} className="p-3 rounded-xl bg-white/5 border border-white/5">
                   <p className="text-xs text-thera-muted mb-1">{stat.label}</p>
-                  <p className="text-lg font-bold">{stat.value}</p>
+                  <p className="text-lg font-data font-medium">{stat.value}</p>
                   <p className={`text-xs text-${stat.color}`}>{stat.change}</p>
                 </div>
               ))}
@@ -148,19 +139,10 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <AnimatedBlob 
-          className="absolute top-20 left-10 w-96 h-96 bg-thera-primary/20 rounded-full blur-3xl" 
-          delay={0}
-        />
-        <AnimatedBlob 
-          className="absolute top-40 right-10 w-80 h-80 bg-thera-secondary/20 rounded-full blur-3xl" 
-          delay={2}
-        />
-        <AnimatedBlob 
-          className="absolute bottom-20 left-1/3 w-72 h-72 bg-thera-accent/15 rounded-full blur-3xl" 
-          delay={4}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#030712_70%)]" />
+        <BreathingRings />
+        <div className="absolute top-24 left-10 w-[28rem] h-[28rem] bg-thera-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-[24rem] h-[24rem] bg-thera-accent/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#0E1712_72%)]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
@@ -185,12 +167,12 @@ export function HeroSection() {
 
             {/* Headline */}
             <motion.div variants={fadeInUp} className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight">
-                Run Your Therapy{" "}
-                <span className="text-gradient">Practice.</span>
+              <h1 className="font-display font-medium text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight">
+                Run your therapy{" "}
+                <span className="text-gradient italic">practice.</span>
                 <br />
-                Not Your{" "}
-                <span className="text-thera-muted">Paperwork.</span>
+                Not your{" "}
+                <span className="text-thera-muted">paperwork.</span>
               </h1>
               <p className="text-lg lg:text-xl text-thera-muted max-w-xl leading-relaxed">
                 Manage appointments, clients, notes, journals, AI documentation, secure messaging, and subscriptions — all in one beautiful platform.
