@@ -27,10 +27,11 @@ export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "", {
 })
 
 // Where to send people after a successful login / verified session.
-// This marketing site shares a Supabase project (and database) with the
-// main TheraSpace app, which lives on its own domain/subdomain.
+// Defaults to a same-origin relative path so it works on whatever domain
+// the site is deployed to. Set NEXT_PUBLIC_APP_DASHBOARD_URL only if the
+// dashboard ever moves to a separate app/subdomain.
 export const APP_DASHBOARD_URL =
-  process.env.NEXT_PUBLIC_APP_DASHBOARD_URL ?? "https://mytherapist.christech.co.ke/dashboard"
+  process.env.NEXT_PUBLIC_APP_DASHBOARD_URL ?? "/dashboard"
 
 export function getSiteUrl() {
   if (typeof window !== "undefined") return window.location.origin
