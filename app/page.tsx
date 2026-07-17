@@ -1,5 +1,7 @@
 import { HeroSection } from "@/app/sections/hero"
 import { TrustSection } from "@/app/sections/trust"
+import { PhotoShowcaseSection } from "@/app/sections/photo-showcase"
+import { TherapistMarketplaceSection } from "@/app/sections/therapist-marketplace"
 import { FeaturesSection } from "@/app/sections/features"
 import { AISection } from "@/app/sections/ai-section"
 import { HowItWorksSection } from "@/app/sections/how-it-works"
@@ -15,6 +17,8 @@ export default function HomePage() {
     <>
       <HeroSection />
       <TrustSection />
+      <PhotoShowcaseSection />
+      <TherapistMarketplaceSection />
       <FeaturesSection />
       <AISection />
       <HowItWorksSection />
