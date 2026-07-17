@@ -30,7 +30,7 @@ export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "", {
 // This marketing site shares a Supabase project (and database) with the
 // main TheraSpace app, which lives on its own domain/subdomain.
 export const APP_DASHBOARD_URL =
-  process.env.NEXT_PUBLIC_APP_DASHBOARD_URL ?? "https://app.mytherapist.christech.co.ke/dashboard"
+  process.env.NEXT_PUBLIC_APP_DASHBOARD_URL ?? "https://mytherapist.christech.co.ke/dashboard"
 
 export function getSiteUrl() {
   if (typeof window !== "undefined") return window.location.origin
