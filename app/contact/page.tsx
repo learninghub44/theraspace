@@ -53,7 +53,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="font-medium mb-1">Email</p>
-                  <p className="text-sm text-thera-muted">hello@theraspace.co.ke</p>
+                  <p className="text-sm text-thera-muted">support@christech.co.ke</p>
                 </div>
               </div>
 
@@ -63,7 +63,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="font-medium mb-1">Phone</p>
-                  <p className="text-sm text-thera-muted">+254 700 000 000</p>
+                  <p className="text-sm text-thera-muted">+254 701 059 192</p>
                 </div>
               </div>
 
@@ -159,7 +159,7 @@ export default function ContactPage() {
                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-thera-muted" />
                         <input
                           type="tel"
-                          placeholder="+254 700 000 000"
+                          placeholder="+254 701 059 192"
                           className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                         />
                       </div>

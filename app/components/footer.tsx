@@ -164,11 +164,11 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-white/5 grid md:grid-cols-3 gap-6">
           <div className="flex items-center gap-3 text-sm text-thera-muted">
             <Mail className="w-4 h-4 text-thera-primary" />
-            <span>hello@theraspace.co.ke</span>
+            <span>support@christech.co.ke</span>
           </div>
           <div className="flex items-center gap-3 text-sm text-thera-muted">
             <Phone className="w-4 h-4 text-thera-primary" />
-            <span>+254 700 000 000</span>
+            <span>+254 701 059 192</span>
           </div>
           <div className="flex items-center gap-3 text-sm text-thera-muted">
             <MapPin className="w-4 h-4 text-thera-primary" />
