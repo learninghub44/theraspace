@@ -15,7 +15,6 @@ const navLinks = [
   { name: "Solutions", href: "#solutions", icon: Users },
   { name: "AI", href: "#ai", icon: Sparkles },
   { name: "Pricing", href: "/pricing", icon: null },
-  { name: "Security", href: "#security", icon: Shield },
   { name: "Resources", href: "#resources", icon: BookOpen },
   { name: "About", href: "/about", icon: null },
   { name: "Contact", href: "/contact", icon: Phone },
