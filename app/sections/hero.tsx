@@ -93,16 +93,6 @@ export function HeroSection() {
             animate="animate"
             className="space-y-8"
           >
-            <motion.div variants={fadeInUp}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-thera-primary/10 border border-thera-primary/20 text-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-thera-primary opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-thera-primary" />
-                </span>
-                <span className="text-thera-primary font-medium">Free to browse, not a booking platform</span>
-              </div>
-            </motion.div>
-
             <motion.div variants={fadeInUp} className="space-y-4">
               <h1 className="font-display font-medium text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight">
                 Find the right{" "}
@@ -111,7 +101,9 @@ export function HeroSection() {
                 for you.
               </h1>
               <p className="text-lg lg:text-xl text-thera-muted max-w-xl leading-relaxed">
-                Therapists list themselves — qualifications, specialties, their own price. Reach out and contact them directly.
+                Every therapist here has written their own profile — their qualifications,
+                specialties, and pricing, in their own words. Find someone who fits, then reach
+                out to them directly. No forms, no waiting list, no middleman.
               </p>
             </motion.div>
 
@@ -139,7 +131,7 @@ export function HeroSection() {
               </form>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4">
               <Link
                 href="/therapists"
                 className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-thera-primary/25 transition-all duration-300 hover:-translate-y-0.5"
@@ -151,7 +143,7 @@ export function HeroSection() {
                 href="/signup"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"
               >
-                List yourself — KES 950/mo
+                Get seen — for only KES 950/mo
               </Link>
             </motion.div>
           </motion.div>

@@ -36,7 +36,7 @@ export function CTASection() {
               href="/signup"
               className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"
             >
-              List Yourself — KES 950/mo
+              Get seen — for only KES 950/mo
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

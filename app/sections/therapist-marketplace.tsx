@@ -53,7 +53,8 @@ export function TherapistMarketplaceSection() {
               : "Browse the marketplace"}
           </h2>
           <p className="text-thera-muted">
-            Therapists list themselves — qualifications, specialties, and their own pricing. Reach out to whoever fits.
+            Every therapist here has written their own profile — qualifications, specialties,
+            and their own pricing. Find one who fits and reach out directly.
           </p>
         </motion.div>
 
@@ -68,7 +69,7 @@ export function TherapistMarketplaceSection() {
               href="/signup"
               className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-thera-primary to-thera-secondary text-sm font-medium hover:opacity-90 transition-opacity"
             >
-              List yourself
+              Get seen — for only KES 950/mo
             </a>
           </div>
         ) : (

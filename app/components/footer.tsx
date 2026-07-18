@@ -3,14 +3,14 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { 
-  Heart, ArrowUpRight, Mail, MapPin, Phone,
+  ArrowUpRight, Mail, MapPin, Phone,
   Twitter, Linkedin, Github, Instagram
 } from "lucide-react"
 
 const footerLinks = {
   marketplace: [
     { name: "Find Therapist", href: "/therapists" },
-    { name: "List Yourself", href: "/signup" },
+    { name: "Get Seen — KES 950/mo", href: "/signup" },
     { name: "How It Works", href: "/#how-it-works" },
   ],
   company: [
@@ -19,8 +19,8 @@ const footerLinks = {
     { name: "FAQ", href: "/#faq" },
   ],
   legal: [
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
   ],
 }
 
@@ -76,8 +76,9 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-thera-muted text-sm mb-6 max-w-xs">
-              A directory where therapists list themselves for KES 950/month — clients browse
-              and contact them directly, free.
+              A directory of real, verified therapists across Kenya — each one lists their own
+              qualifications, specialties, and pricing. Browsing and contacting them is free,
+              always.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -154,12 +155,9 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-thera-ink/5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-8 pt-8 border-t border-thera-ink/5 flex flex-col md:flex-row justify-center items-center gap-4">
           <p className="text-sm text-thera-muted">
             &copy; {new Date().getFullYear()} TheraSpace. All rights reserved.
-          </p>
-          <p className="text-sm text-thera-muted flex items-center gap-1">
-            Made with <Heart className="w-4 h-4 text-thera-danger fill-thera-danger" /> in Kenya
           </p>
         </div>
       </div>

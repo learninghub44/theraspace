@@ -43,7 +43,8 @@ export default function ContactPage() {
               Let&apos;s <span className="text-gradient">talk</span>
             </h1>
             <p className="text-lg text-thera-muted mb-12 leading-relaxed">
-              Have questions about TheraSpace? Want to schedule a demo? Our team is here to help you get started.
+              Question about a listing, a therapist you found, or your subscription? Reach out —
+              a real person reads every message.
             </p>
 
             <div className="space-y-6">
@@ -143,12 +144,12 @@ export default function ContactPage() {
 
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Company</label>
+                      <label className="block text-sm font-medium mb-2">I am a...</label>
                       <div className="relative">
                         <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-thera-muted" />
                         <input
                           type="text"
-                          placeholder="Your clinic or practice"
+                          placeholder="Client / Therapist / Other"
                           className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                         />
                       </div>
