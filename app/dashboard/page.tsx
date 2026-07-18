@@ -42,19 +42,28 @@ export default function ClientDashboardPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-sm">Account</h3>
-              </div>
+              <h3 className="font-semibold text-sm mb-1">Account</h3>
               <p className="text-xs text-thera-muted mb-1">Signed in as</p>
-              <p className="text-sm font-medium mb-4">{session.user.email}</p>
-              <a
-                href="/therapist-dashboard"
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-thera-primary hover:underline"
-              >
-                Are you a therapist? List yourself <ArrowUpRight className="w-3 h-3" />
-              </a>
+              <p className="text-sm font-medium">{session.user.email}</p>
             </div>
           </div>
+
+          <a
+            href="/therapist-dashboard"
+            className="block p-6 rounded-2xl bg-thera-primary/10 border-2 border-thera-primary/30 hover:border-thera-primary/60 transition-colors group"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="font-bold text-lg text-thera-primary mb-1">
+                  Are you a therapist? List yourself
+                </p>
+                <p className="text-sm text-thera-muted">
+                  Create your listing and get seen in the marketplace — KES 950/month.
+                </p>
+              </div>
+              <ArrowUpRight className="w-6 h-6 text-thera-primary flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </a>
         </div>
       )}
     </DashboardShell>
