@@ -379,12 +379,20 @@ function BillingCard({ session }: { session: Session }) {
     const {
       data: { session: freshSession },
     } = await supabase.auth.getSession()
-    const { data, error: invokeError } = await supabase.functions.invoke("paystack-initialize", {
-      headers: { Authorization: `Bearer ${freshSession?.access_token ?? ""}` },
-    })
+    let data: { authorization_url?: string; error?: string } | null = null
+    let requestFailed = false
+    try {
+      const res = await fetch("/api/paystack/initialize", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${freshSession?.access_token ?? ""}` },
+      })
+      data = await res.json().catch(() => null)
+    } catch {
+      requestFailed = true
+    }
     setPaying(false)
-    if (invokeError || !data?.authorization_url) {
-      setError((data as any)?.error ?? invokeError?.message ?? "Could not start payment.")
+    if (requestFailed || !data?.authorization_url) {
+      setError(data?.error ?? "Could not start payment.")
       return
     }
     window.location.href = data.authorization_url
@@ -396,12 +404,24 @@ function BillingCard({ session }: { session: Session }) {
     const {
       data: { session: freshSession },
     } = await supabase.auth.getSession()
-    const { error: invokeError } = await supabase.functions.invoke("paystack-cancel", {
-      headers: { Authorization: `Bearer ${freshSession?.access_token ?? ""}` },
-    })
+    let ok = false
+    let errorMessage = "Could not cancel subscription."
+    try {
+      const res = await fetch("/api/paystack/cancel", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${freshSession?.access_token ?? ""}` },
+      })
+      ok = res.ok
+      if (!ok) {
+        const data = await res.json().catch(() => null)
+        errorMessage = data?.error ?? errorMessage
+      }
+    } catch {
+      ok = false
+    }
     setCancelling(false)
-    if (invokeError) {
-      setError(invokeError.message)
+    if (!ok) {
+      setError(errorMessage)
       return
     }
     refresh()
