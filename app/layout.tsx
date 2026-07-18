@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Fraunces, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/app/components/theme-provider"
 import { Navbar } from "@/app/components/navbar"
 import { Footer } from "@/app/components/footer"
 
@@ -114,11 +113,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${fraunces.variable} ${plexMono.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )

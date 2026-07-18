@@ -4,10 +4,9 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
-  Menu, X, Moon, Sun, ChevronDown, 
+  Menu, X, ChevronDown, 
   Shield, Sparkles, Users, Phone, LayoutDashboard
 } from "lucide-react"
-import { useTheme } from "next-themes"
 import { cn } from "@/app/lib/utils"
 import { supabase } from "@/app/lib/supabase"
 import { useProfile } from "@/app/lib/use-profile"
@@ -25,8 +24,6 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
   const [session, setSession] = useState<Session | null>(null)
   const { profile } = useProfile(session)
 
@@ -45,7 +42,6 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
-    setMounted(true)
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
 
@@ -131,17 +127,6 @@ export function Navbar() {
 
             {/* Right Side */}
             <div className="flex items-center gap-3">
-              {/* Theme Toggle */}
-              {mounted && (
-                <button
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="p-2 rounded-lg hover:bg-thera-ink/10 transition-colors text-thera-muted hover:text-thera-text"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </button>
-              )}
-
               {/* Auth-aware links */}
               {session ? (
                 <>
