@@ -80,7 +80,7 @@ export function PricingSection() {
                     href="/contact"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300"
                   >
-                    Book a Demo
+                    Talk to us first
                   </Link>
                 </div>
                 <p className="text-xs text-thera-muted mt-4">

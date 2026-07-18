@@ -98,7 +98,7 @@ export default function PricingPage() {
                     href="/contact"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold border border-thera-ink/10 hover:bg-thera-ink/5 transition-all"
                   >
-                    Book a Demo
+                    Talk to us first
                   </Link>
                 </div>
               </div>
