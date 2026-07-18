@@ -58,8 +58,8 @@ export function MultiTenantSection() {
               <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" style={{ zIndex: -1 }}>
                 <defs>
                   <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#2B6E64" />
-                    <stop offset="100%" stopColor="#7FAE8C" />
+                    <stop offset="0%" stopColor="#5B5DD1" />
+                    <stop offset="100%" stopColor="#B7A6E8" />
                   </linearGradient>
                 </defs>
               </svg>

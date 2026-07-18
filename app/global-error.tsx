@@ -31,7 +31,7 @@ export default function GlobalError({
             <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem" }}>
               Something went wrong
             </h1>
-            <p style={{ color: "#68766F", marginBottom: "2rem" }}>
+            <p style={{ color: "#6E6A85", marginBottom: "2rem" }}>
               The app hit an unexpected error. Reloading usually fixes it.
             </p>
             <button
@@ -39,7 +39,7 @@ export default function GlobalError({
               style={{
                 padding: "0.625rem 1.25rem",
                 borderRadius: "9999px",
-                background: "#2B6E64",
+                background: "#5B5DD1",
                 color: "white",
                 fontSize: "0.875rem",
                 fontWeight: 500,

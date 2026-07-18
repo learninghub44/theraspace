@@ -65,7 +65,7 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(100deg, #2B6E64 0%, #7FAE8C 100%);
+    background-image: linear-gradient(100deg, #5B5DD1 0%, #B7A6E8 100%);
   }
 
   .glass {
@@ -77,16 +77,16 @@
   }
 
   .glow-primary {
-    box-shadow: 0 8px 30px rgba(43, 110, 100, 0.14), 0 2px 8px rgba(43, 110, 100, 0.08);
+    box-shadow: 0 8px 30px rgba(91, 93, 209, 0.14), 0 2px 8px rgba(91, 93, 209, 0.08);
   }
 
   .glow-accent {
-    box-shadow: 0 8px 30px rgba(226, 137, 107, 0.16), 0 2px 8px rgba(226, 137, 107, 0.08);
+    box-shadow: 0 8px 30px rgba(124, 92, 191, 0.16), 0 2px 8px rgba(124, 92, 191, 0.08);
   }
 
   .gradient-border {
     position: relative;
-    background: linear-gradient(100deg, #2B6E64, #7FAE8C);
+    background: linear-gradient(100deg, #5B5DD1, #B7A6E8);
     padding: 1px;
   }
 
@@ -121,8 +121,8 @@
     background-image:
       repeating-radial-gradient(
         circle at center,
-        rgba(43, 110, 100, 0.10) 0px,
-        rgba(43, 110, 100, 0.10) 1px,
+        rgba(91, 93, 209, 0.10) 0px,
+        rgba(91, 93, 209, 0.10) 1px,
         transparent 1px,
         transparent 64px
       );
@@ -132,8 +132,8 @@
     background-image:
       repeating-radial-gradient(
         circle at center,
-        rgba(226, 137, 107, 0.12) 0px,
-        rgba(226, 137, 107, 0.12) 1px,
+        rgba(124, 92, 191, 0.12) 0px,
+        rgba(124, 92, 191, 0.12) 1px,
         transparent 1px,
         transparent 64px
       );

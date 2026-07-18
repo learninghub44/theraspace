@@ -4,8 +4,8 @@
   "description": "A directory of verified, self-listed therapists across Kenya. Browse and contact directly — free, always.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F7F7F2",
-  "theme_color": "#2B6E64",
+  "background_color": "#F6F5FC",
+  "theme_color": "#5B5DD1",
   "icons": [
     { "src": "/favicon.ico", "sizes": "32x32" },
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },

@@ -128,6 +128,9 @@ export function Footer() {
                 <a
                   key={social.name}
                   href={social.href}
+                  target={social.href === "#" ? undefined : "_blank"}
+                  rel={social.href === "#" ? undefined : "noopener noreferrer"}
+                  onClick={social.href === "#" ? (e) => e.preventDefault() : undefined}
                   className="p-2.5 rounded-lg bg-thera-ink/5 hover:bg-thera-ink/10 transition-colors text-thera-muted hover:text-thera-text"
                   aria-label={social.name}
                 >

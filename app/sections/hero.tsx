@@ -38,7 +38,7 @@ export function HeroSection() {
         <BreathingRings />
         <div className="absolute top-24 left-10 w-[28rem] h-[28rem] bg-thera-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-10 right-10 w-[24rem] h-[24rem] bg-thera-accent/10 rounded-full blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#F7F7F2_72%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#F6F5FC_72%)]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
