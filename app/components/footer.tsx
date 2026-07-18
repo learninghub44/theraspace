@@ -1,9 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { 
-  ArrowUpRight, Mail, MapPin, Phone,
+  ArrowUpRight, Mail, MapPin, Phone, CheckCircle2,
   Twitter, Linkedin, Github, Instagram
 } from "lucide-react"
 import { LogoMark } from "@/app/components/logo"
@@ -33,6 +34,35 @@ const socialLinks = [
 ]
 
 export function Footer() {
+  const [email, setEmail] = useState("")
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus("loading")
+    setError(null)
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || "Something went wrong. Please try again.")
+      }
+
+      setStatus("success")
+      setEmail("")
+    } catch (err) {
+      setStatus("error")
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    }
+  }
+
   return (
     <footer className="relative border-t border-thera-ink/5 bg-thera-bg">
       {/* Newsletter Section */}
@@ -47,19 +77,35 @@ export function Footer() {
               the directory.
             </p>
           </div>
-          <form className="flex gap-3">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-5 py-4 bg-thera-ink/5 border border-thera-ink/10 rounded-xl text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
-            />
-            <button
-              type="submit"
-              className="px-6 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl font-semibold hover:opacity-90 transition-opacity whitespace-nowrap"
-            >
-              Subscribe
-            </button>
-          </form>
+          <div>
+            {status === "success" ? (
+              <div className="flex items-center gap-3 px-5 py-4 bg-thera-primary/10 border border-thera-primary/20 rounded-xl text-thera-text">
+                <CheckCircle2 className="w-5 h-5 text-thera-primary flex-shrink-0" />
+                <span className="text-sm">You&apos;re subscribed — thanks!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex gap-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1 px-5 py-4 bg-thera-ink/5 border border-thera-ink/10 rounded-xl text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="px-6 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl font-semibold hover:opacity-90 transition-opacity whitespace-nowrap disabled:opacity-50"
+                >
+                  {status === "loading" ? "Subscribing..." : "Subscribe"}
+                </button>
+              </form>
+            )}
+            {status === "error" && error && (
+              <p className="mt-2 text-sm text-red-400">{error}</p>
+            )}
+          </div>
         </div>
 
         {/* Links Grid */}

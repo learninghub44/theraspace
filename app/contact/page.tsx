@@ -11,13 +11,58 @@ import {
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    role: "",
+    phone: "",
+    message: "",
+  })
+
+  const updateField = (field: keyof typeof form) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((prev) => ({ ...prev, [field]: e.target.value }))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
     setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    setIsSubmitted(true)
+
+    // Fold the "I am a..." + phone fields into the message body — the
+    // backend table only has name/email/subject/message columns.
+    const extras = [
+      form.role && `Role: ${form.role}`,
+      form.phone && `Phone: ${form.phone}`,
+    ]
+      .filter(Boolean)
+      .join("\n")
+    const fullMessage = extras ? `${extras}\n\n${form.message}` : form.message
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.role || undefined,
+          message: fullMessage,
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || "Something went wrong. Please try again.")
+      }
+
+      setIsSubmitted(true)
+      setForm({ name: "", email: "", role: "", phone: "", message: "" })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -123,6 +168,8 @@ export default function ContactPage() {
                         <input
                           type="text"
                           placeholder="Your name"
+                          value={form.name}
+                          onChange={updateField("name")}
                           className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                           required
                         />
@@ -135,6 +182,8 @@ export default function ContactPage() {
                         <input
                           type="email"
                           placeholder="you@example.com"
+                          value={form.email}
+                          onChange={updateField("email")}
                           className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                           required
                         />
@@ -150,6 +199,8 @@ export default function ContactPage() {
                         <input
                           type="text"
                           placeholder="Client / Therapist / Other"
+                          value={form.role}
+                          onChange={updateField("role")}
                           className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                         />
                       </div>
@@ -161,6 +212,8 @@ export default function ContactPage() {
                         <input
                           type="tel"
                           placeholder="+254 701 059 192"
+                          value={form.phone}
+                          onChange={updateField("phone")}
                           className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                         />
                       </div>
@@ -174,11 +227,19 @@ export default function ContactPage() {
                       <textarea
                         rows={5}
                         placeholder="How can we help you?"
+                        value={form.message}
+                        onChange={updateField("message")}
                         className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all resize-none"
                         required
                       />
                     </div>
                   </div>
+
+                  {error && (
+                    <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400">
+                      {error}
+                    </div>
+                  )}
 
                   <button
                     type="submit"
