@@ -130,7 +130,7 @@ The project is configured for static export (`output: 'export'`). Simply upload 
 
 ## Pricing
 
-**KES 1,000/month** — One plan, everything included.
+**KES 950/month** — One plan, everything included.
 
 - Unlimited Clients
 - Unlimited Notes

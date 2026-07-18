@@ -1,6 +1,6 @@
 // POST /paystack-initialize
 // Called by a signed-in therapist from the dashboard. Verifies they have a
-// listing, then asks Paystack to start a transaction for KES 1,000 and
+// listing, then asks Paystack to start a transaction for KES 950 and
 // returns the checkout URL to redirect the browser to. The webhook
 // (paystack-webhook) is what actually marks the subscription active once
 // Paystack confirms the charge — this function never trusts the client's
@@ -13,7 +13,7 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
 const SITE_URL = Deno.env.get("SITE_URL") ?? "https://mytherapist.christech.co.ke"
 
-const MONTHLY_AMOUNT_KES = 1000
+const MONTHLY_AMOUNT_KES = 950
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders })

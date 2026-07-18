@@ -12,12 +12,21 @@ if (!supabaseUrl || !supabaseAnonKey) {
   )
 }
 
+// createClient() throws synchronously if given an empty/invalid URL, which
+// would crash `next build` for every prerendered page the moment env vars
+// are missing (a placeholder branch, a fresh clone, a misconfigured CI
+// job). Fall back to a syntactically valid placeholder so the build always
+// succeeds — real requests will simply fail at runtime with a clear network
+// error instead of the whole site failing to deploy.
+const safeUrl = supabaseUrl || "https://placeholder.supabase.co"
+const safeAnonKey = supabaseAnonKey || "placeholder-anon-key"
+
 // This site is statically exported (output: 'export'), so there is no
 // Next.js server to hold cookies/session. We use the plain browser client,
 // which persists the session in localStorage and automatically parses
 // tokens/codes that Supabase appends to the URL after email links
 // (signup confirmation, password reset, magic links).
-export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "", {
+export const supabase = createClient(safeUrl, safeAnonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,

@@ -1,5 +1,5 @@
 -- TheraSpace subscriptions
--- Therapists pay KES 1,000/month to appear in the public marketplace.
+-- Therapists pay KES 950/month to appear in the public marketplace.
 -- Approval (admin moderation) and payment (this table) are independent
 -- gates: a listing only shows up publicly when BOTH status = 'approved'
 -- AND the therapist has an active, unexpired subscription.
@@ -20,7 +20,7 @@ create table if not exists public.therapist_subscriptions (
   status text not null default 'inactive' check (status in ('inactive', 'active', 'past_due', 'cancelled')),
   paystack_customer_code text,
   last_reference text,
-  amount integer not null default 100000, -- KES 1,000 in the lowest currency subunit
+  amount integer not null default 95000, -- KES 950 in the lowest currency subunit
   currency text not null default 'KES',
   current_period_end timestamptz,
   last_payment_at timestamptz,

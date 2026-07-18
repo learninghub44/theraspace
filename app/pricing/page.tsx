@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Is there a setup fee?",
-    a: "No setup fees, no hidden charges — KES 1,000 per month to be listed.",
+    a: "No setup fees, no hidden charges — KES 950 per month to be listed.",
   },
   {
     q: "What happens if I don't renew?",
@@ -35,7 +35,7 @@ const faqs = [
 ]
 
 export default function PricingPage() {
-  const monthlyPrice = 1000
+  const monthlyPrice = 950
 
   return (
     <div className="min-h-screen pt-20 pb-20">

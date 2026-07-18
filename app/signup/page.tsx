@@ -113,7 +113,7 @@ export default function SignupPage() {
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-2xl font-bold mb-2">Create your account</h1>
-            <p className="text-sm text-thera-muted">Free to sign up — KES 1,000/month to go live</p>
+            <p className="text-sm text-thera-muted">Free to sign up — KES 950/month to go live</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

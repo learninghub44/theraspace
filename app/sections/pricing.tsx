@@ -62,7 +62,7 @@ export function PricingSection() {
               {/* Left - Price */}
               <div className="text-center lg:text-left">
                 <div className="mb-6">
-                  <span className="text-6xl lg:text-7xl font-bold text-gradient">KES 1,000</span>
+                  <span className="text-6xl lg:text-7xl font-bold text-gradient">KES 950</span>
                   <span className="text-xl text-thera-muted ml-2">/month</span>
                 </div>
                 <p className="text-thera-muted mb-8">

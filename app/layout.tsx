@@ -97,7 +97,7 @@ export default function RootLayout({
               operatingSystem: "Web",
               offers: {
                 "@type": "Offer",
-                price: "1000",
+                price: "950",
                 priceCurrency: "KES",
                 priceValidUntil: "2026-12-31",
               },

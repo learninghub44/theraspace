@@ -76,7 +76,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-thera-muted text-sm mb-6 max-w-xs">
-              A directory where therapists list themselves for KES 1,000/month — clients browse
+              A directory where therapists list themselves for KES 950/month — clients browse
               and contact them directly, free.
             </p>
             <div className="flex gap-3">

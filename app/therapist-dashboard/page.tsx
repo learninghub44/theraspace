@@ -183,7 +183,7 @@ function ListingForm({ session }: { session: Session }) {
         <p className="text-sm text-thera-muted mb-2">
           This is what visitors see in the marketplace. TheraSpace doesn&apos;t handle
           session bookings or payments between you and clients — they contact you directly
-          using the details below. Your KES 1,000/month subscription only covers being listed.
+          using the details below. Your KES 950/month subscription only covers being listed.
         </p>
         {listing?.status === "rejected" && listing.rejection_reason && (
           <p className="text-sm text-thera-danger bg-thera-danger/10 border border-thera-danger/20 rounded-xl px-4 py-3 mt-3">
@@ -415,7 +415,7 @@ function BillingCard({ session }: { session: Session }) {
       </div>
       <p className="text-sm text-thera-muted mb-4">
         Your listing only appears in the public marketplace while it&apos;s approved{" "}
-        <span className="font-medium">and</span> your subscription is active — KES 1,000/month, via
+        <span className="font-medium">and</span> your subscription is active — KES 950/month, via
         M-Pesa or card.
       </p>
 
@@ -460,7 +460,7 @@ function BillingCard({ session }: { session: Session }) {
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-thera-primary/25 transition-all disabled:opacity-50"
           >
             {paying ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
-            Pay KES 1,000 & go live
+            Pay KES 950 & go live
           </button>
         </div>
       )}

@@ -151,7 +151,7 @@ export function HeroSection() {
                 href="/signup"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"
               >
-                List yourself — KES 1,000/mo
+                List yourself — KES 950/mo
               </Link>
             </motion.div>
           </motion.div>
