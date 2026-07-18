@@ -2,20 +2,25 @@
 
 import { useEffect, useState, type ReactNode } from "react"
 import Link from "next/link"
-import { Sparkles, LogOut, Loader2 } from "lucide-react"
+import { Sparkles, LogOut, Loader2, ShieldAlert } from "lucide-react"
 import { supabase } from "@/app/lib/supabase"
+import { useProfile } from "@/app/lib/use-profile"
 import type { Session } from "@supabase/supabase-js"
+import type { Profile } from "@/types"
 
 interface DashboardShellProps {
   title: string
   subtitle?: string
-  children: (session: Session) => ReactNode
+  /** Restrict this dashboard to a single role (e.g. "admin"). Omit for any signed-in user. */
+  requiredRole?: Profile["role"]
+  children: (session: Session, profile: Profile | null) => ReactNode
 }
 
-export function DashboardShell({ title, subtitle, children }: DashboardShellProps) {
+export function DashboardShell({ title, subtitle, requiredRole, children }: DashboardShellProps) {
   const [session, setSession] = useState<Session | null>(null)
   const [status, setStatus] = useState<"checking" | "ready" | "signed-out">("checking")
   const [signingOut, setSigningOut] = useState(false)
+  const { profile, status: profileStatus } = useProfile(session)
 
   useEffect(() => {
     let active = true
@@ -83,6 +88,41 @@ export function DashboardShell({ title, subtitle, children }: DashboardShellProp
     )
   }
 
+  // Session exists, but we haven't confirmed the role yet — don't flash the
+  // gated content (or a false "access restricted") while this is in flight.
+  if (requiredRole && profileStatus === "loading") {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 py-20">
+        <Loader2 className="w-8 h-8 text-thera-muted animate-spin" />
+        <p className="text-thera-muted text-sm">Checking access...</p>
+      </div>
+    )
+  }
+
+  if (requiredRole && (profileStatus === "error" || profile?.role !== requiredRole)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 py-20">
+        <div className="text-center max-w-md">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-thera-danger/10 mb-6">
+            <ShieldAlert className="w-6 h-6 text-thera-danger" />
+          </div>
+          <h1 className="text-2xl font-bold mb-3">Access restricted</h1>
+          <p className="text-thera-muted mb-6">
+            {profileStatus === "error"
+              ? "We couldn't verify your account access. Try refreshing the page."
+              : "This area is only available to admin accounts."}
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-xl font-semibold"
+          >
+            Back to your dashboard
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   const email = session.user?.email ?? ""
 
   return (
@@ -116,7 +156,7 @@ export function DashboardShell({ title, subtitle, children }: DashboardShellProp
 
         <h1 className="font-display text-2xl sm:text-3xl font-medium mb-8">{title}</h1>
 
-        {children(session)}
+        {children(session, profile)}
       </div>
     </div>
   )

@@ -8,6 +8,40 @@ export interface User {
   created_at: string
 }
 
+// --- Marketplace (self-listing directory) types ---
+// These back the profiles / therapist_profiles tables in
+// supabase/migrations/0001_marketplace.sql. The platform only stores and
+// moderates listings — it does not handle bookings or payments.
+
+export interface Profile {
+  id: string
+  email: string
+  role: 'client' | 'admin'
+  created_at: string
+}
+
+export type TherapistListingStatus = 'pending' | 'approved' | 'rejected'
+
+export interface TherapistProfile {
+  id: string
+  user_id: string
+  full_name: string
+  photo_url: string | null
+  specialty: string
+  bio: string | null
+  qualifications: string | null
+  languages: string | null
+  location: string | null
+  price_from: number | null
+  session_modes: string[]
+  contact_phone: string | null
+  contact_email: string | null
+  status: TherapistListingStatus
+  rejection_reason: string | null
+  created_at: string
+  updated_at: string
+}
+
 export interface Clinic {
   id: string
   name: string

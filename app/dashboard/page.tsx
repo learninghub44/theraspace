@@ -143,9 +143,14 @@ export default function ClientDashboardPage() {
             <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <CreditCard className="w-5 h-5 text-thera-muted" />
-                <h2 className="font-semibold text-sm">Payment history</h2>
+                <h2 className="font-semibold text-sm">Are you a therapist?</h2>
               </div>
-              <p className="text-sm text-thera-muted">No payments yet.</p>
+              <p className="text-sm text-thera-muted">
+                List yourself on the marketplace — clients contact you directly, we don&apos;t touch payments.
+              </p>
+              <a href="/therapist-dashboard" className="text-xs font-medium text-thera-primary hover:underline mt-2 inline-block">
+                Create your listing
+              </a>
             </div>
             <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
               <div className="flex items-center gap-2 mb-2">

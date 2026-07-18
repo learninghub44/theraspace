@@ -1,148 +1,354 @@
 "use client"
 
+import { useCallback, useEffect, useState } from "react"
 import {
-  Calendar,
-  Clock,
-  UserPlus,
-  Wallet,
-  Star,
-  MessageSquare,
-  Bell,
-  NotebookPen,
-  Clock4,
   UserCircle2,
+  Loader2,
+  CheckCircle2,
+  Clock4,
+  XCircle,
+  Save,
 } from "lucide-react"
 import { DashboardShell } from "@/app/components/dashboard-shell"
+import { supabase } from "@/app/lib/supabase"
+import type { Session } from "@supabase/supabase-js"
+import type { TherapistProfile } from "@/types"
 
-// Sample data — UI scaffold only. A real version needs an appointments/
-// earnings/reviews schema and role-gated access (this page currently
-// only checks that someone is signed in, not that they're a therapist).
-const todaysAppointments = [
-  { client: "Sarah M.", time: "9:00 AM", type: "Video" },
-  { client: "James K.", time: "11:30 AM", type: "In-person" },
-  { client: "Amina W.", time: "3:00 PM", type: "Video" },
+const SESSION_MODE_OPTIONS = [
+  { value: "video", label: "Video" },
+  { value: "in_person", label: "In-person" },
+  { value: "phone", label: "Phone" },
 ]
 
-const clientRequests = [
-  { client: "Peter N.", note: "Requesting a Thursday morning slot" },
-  { client: "Grace O.", note: "New client — anxiety support" },
-]
+type FormState = {
+  full_name: string
+  photo_url: string
+  specialty: string
+  bio: string
+  qualifications: string
+  languages: string
+  location: string
+  price_from: string
+  session_modes: string[]
+  contact_phone: string
+  contact_email: string
+}
+
+const emptyForm: FormState = {
+  full_name: "",
+  photo_url: "",
+  specialty: "",
+  bio: "",
+  qualifications: "",
+  languages: "",
+  location: "",
+  price_from: "",
+  session_modes: [],
+  contact_phone: "",
+  contact_email: "",
+}
+
+function StatusBadge({ status }: { status: TherapistProfile["status"] }) {
+  const map = {
+    pending: { icon: Clock4, label: "Pending review", cls: "bg-thera-warning/10 text-thera-warning" },
+    approved: { icon: CheckCircle2, label: "Live on the marketplace", cls: "bg-thera-success/10 text-thera-success" },
+    rejected: { icon: XCircle, label: "Changes requested", cls: "bg-thera-danger/10 text-thera-danger" },
+  } as const
+  const { icon: Icon, label, cls } = map[status]
+  return (
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${cls}`}>
+      <Icon className="w-3.5 h-3.5" />
+      {label}
+    </span>
+  )
+}
+
+function ListingForm({ session }: { session: Session }) {
+  const [listing, setListing] = useState<TherapistProfile | null>(null)
+  const [form, setForm] = useState<FormState>(emptyForm)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [saved, setSaved] = useState(false)
+
+  const loadListing = useCallback(async () => {
+    setLoading(true)
+    const { data, error: fetchError } = await supabase
+      .from("therapist_profiles")
+      .select("*")
+      .eq("user_id", session.user.id)
+      .maybeSingle()
+
+    if (fetchError) {
+      setError(fetchError.message)
+      setLoading(false)
+      return
+    }
+
+    if (data) {
+      const row = data as TherapistProfile
+      setListing(row)
+      setForm({
+        full_name: row.full_name ?? "",
+        photo_url: row.photo_url ?? "",
+        specialty: row.specialty ?? "",
+        bio: row.bio ?? "",
+        qualifications: row.qualifications ?? "",
+        languages: row.languages ?? "",
+        location: row.location ?? "",
+        price_from: row.price_from?.toString() ?? "",
+        session_modes: row.session_modes ?? [],
+        contact_phone: row.contact_phone ?? "",
+        contact_email: row.contact_email ?? session.user.email ?? "",
+      })
+    } else {
+      setForm((f) => ({ ...f, contact_email: session.user.email ?? "" }))
+    }
+    setLoading(false)
+  }, [session])
+
+  useEffect(() => {
+    loadListing()
+  }, [loadListing])
+
+  const toggleMode = (value: string) => {
+    setForm((f) => ({
+      ...f,
+      session_modes: f.session_modes.includes(value)
+        ? f.session_modes.filter((m) => m !== value)
+        : [...f.session_modes, value],
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSaving(true)
+    setError(null)
+    setSaved(false)
+
+    const payload = {
+      user_id: session.user.id,
+      full_name: form.full_name,
+      photo_url: form.photo_url || null,
+      specialty: form.specialty,
+      bio: form.bio || null,
+      qualifications: form.qualifications || null,
+      languages: form.languages || null,
+      location: form.location || null,
+      price_from: form.price_from ? parseInt(form.price_from, 10) : null,
+      session_modes: form.session_modes,
+      contact_phone: form.contact_phone || null,
+      contact_email: form.contact_email || null,
+    }
+
+    const { data, error: upsertError } = await supabase
+      .from("therapist_profiles")
+      .upsert(payload, { onConflict: "user_id" })
+      .select()
+      .single()
+
+    setSaving(false)
+
+    if (upsertError) {
+      setError(upsertError.message)
+      return
+    }
+
+    setListing(data as TherapistProfile)
+    setSaved(true)
+    setTimeout(() => setSaved(false), 3000)
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 text-thera-muted text-sm py-12 justify-center">
+        <Loader2 className="w-4 h-4 animate-spin" /> Loading your listing...
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+        <div className="flex items-center justify-between gap-4 mb-2">
+          <div className="flex items-center gap-2">
+            <UserCircle2 className="w-5 h-5 text-thera-primary" />
+            <h2 className="font-semibold">Your listing</h2>
+          </div>
+          {listing && <StatusBadge status={listing.status} />}
+        </div>
+        <p className="text-sm text-thera-muted mb-2">
+          This is what visitors see in the marketplace. TheraSpace doesn&apos;t handle
+          bookings or payments — clients contact you directly using the details below.
+        </p>
+        {listing?.status === "rejected" && listing.rejection_reason && (
+          <p className="text-sm text-thera-danger bg-thera-danger/10 border border-thera-danger/20 rounded-xl px-4 py-3 mt-3">
+            <span className="font-medium">Admin feedback:</span> {listing.rejection_reason}
+          </p>
+        )}
+        {listing?.status === "pending" && (
+          <p className="text-xs text-thera-muted mt-3">
+            An admin will review your details before this listing appears publicly.
+          </p>
+        )}
+      </div>
+
+      <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm space-y-5">
+        {error && (
+          <p className="text-sm text-thera-danger bg-thera-danger/10 border border-thera-danger/20 rounded-xl px-4 py-3">
+            {error}
+          </p>
+        )}
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-sm font-medium mb-2">Full name</label>
+            <input
+              required
+              value={form.full_name}
+              onChange={(e) => setForm((f) => ({ ...f, full_name: e.target.value }))}
+              placeholder="Dr. Amina Njoroge"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Specialty</label>
+            <input
+              required
+              value={form.specialty}
+              onChange={(e) => setForm((f) => ({ ...f, specialty: e.target.value }))}
+              placeholder="Anxiety & Stress Management"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Bio</label>
+          <textarea
+            rows={4}
+            value={form.bio}
+            onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
+            placeholder="Tell clients about your approach and experience..."
+            className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Qualifications</label>
+          <input
+            value={form.qualifications}
+            onChange={(e) => setForm((f) => ({ ...f, qualifications: e.target.value }))}
+            placeholder="MSc Clinical Psychology, Licensed Counsellor (Kenya Board)"
+            className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+          />
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-sm font-medium mb-2">Languages</label>
+            <input
+              value={form.languages}
+              onChange={(e) => setForm((f) => ({ ...f, languages: e.target.value }))}
+              placeholder="English, Kiswahili"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Location</label>
+            <input
+              value={form.location}
+              onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
+              placeholder="Nairobi"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-sm font-medium mb-2">Price from (KES / session)</label>
+            <input
+              type="number"
+              min="0"
+              value={form.price_from}
+              onChange={(e) => setForm((f) => ({ ...f, price_from: e.target.value }))}
+              placeholder="2500"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+            <p className="text-xs text-thera-muted mt-1">You set your own rate — this is a directory, not a checkout.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Photo URL</label>
+            <input
+              value={form.photo_url}
+              onChange={(e) => setForm((f) => ({ ...f, photo_url: e.target.value }))}
+              placeholder="https://..."
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Session modes</label>
+          <div className="flex gap-2 flex-wrap">
+            {SESSION_MODE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => toggleMode(opt.value)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${
+                  form.session_modes.includes(opt.value)
+                    ? "bg-thera-primary text-white border-thera-primary"
+                    : "bg-thera-ink/5 border-thera-ink/10 hover:bg-thera-ink/10"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-sm font-medium mb-2">Contact phone</label>
+            <input
+              value={form.contact_phone}
+              onChange={(e) => setForm((f) => ({ ...f, contact_phone: e.target.value }))}
+              placeholder="+254 7XX XXX XXX"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Contact email</label>
+            <input
+              type="email"
+              value={form.contact_email}
+              onChange={(e) => setForm((f) => ({ ...f, contact_email: e.target.value }))}
+              placeholder="you@example.com"
+              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          disabled={saving}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-thera-primary/25 transition-all disabled:opacity-50"
+        >
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+          {listing ? "Save & resubmit for review" : "Submit listing for review"}
+        </button>
+        {saved && <p className="text-sm text-thera-success">Saved.</p>}
+      </form>
+    </div>
+  )
+}
 
 export default function TherapistDashboardPage() {
   return (
-    <DashboardShell title="Practice overview" subtitle="Signed in as">
-      {() => (
-        <div className="space-y-6">
-          <div className="grid sm:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <Calendar className="w-5 h-5 text-thera-primary mb-2" />
-              <p className="text-2xl font-data font-medium">3</p>
-              <p className="text-xs text-thera-muted">Today&apos;s sessions</p>
-            </div>
-            <div className="p-5 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <UserPlus className="w-5 h-5 text-thera-accent mb-2" />
-              <p className="text-2xl font-data font-medium">2</p>
-              <p className="text-xs text-thera-muted">New requests</p>
-            </div>
-            <div className="p-5 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <Wallet className="w-5 h-5 text-thera-success mb-2" />
-              <p className="text-2xl font-data font-medium">KES 0</p>
-              <p className="text-xs text-thera-muted">Earnings (this month)</p>
-            </div>
-            <div className="p-5 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <Star className="w-5 h-5 text-thera-warning mb-2" />
-              <p className="text-2xl font-data font-medium">—</p>
-              <p className="text-xs text-thera-muted">Average rating</p>
-            </div>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-5">
-            <div className="lg:col-span-2 p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <Clock className="w-5 h-5 text-thera-primary" />
-                <h2 className="font-semibold">Today&apos;s appointments</h2>
-              </div>
-              <div className="space-y-3">
-                {todaysAppointments.map((a) => (
-                  <div key={a.client} className="flex items-center justify-between p-4 rounded-xl bg-thera-ink/[0.03] border border-thera-ink/5">
-                    <div>
-                      <p className="font-medium text-sm">{a.client}</p>
-                      <p className="text-xs text-thera-muted">{a.time} · {a.type}</p>
-                    </div>
-                    <button className="px-3 py-1.5 rounded-lg border border-thera-ink/10 text-xs font-medium hover:bg-thera-ink/5 transition-colors">
-                      View
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <UserPlus className="w-5 h-5 text-thera-accent" />
-                <h2 className="font-semibold text-sm">Client requests</h2>
-              </div>
-              <div className="space-y-3">
-                {clientRequests.map((r) => (
-                  <div key={r.client} className="text-sm">
-                    <p className="font-medium">{r.client}</p>
-                    <p className="text-xs text-thera-muted">{r.note}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <MessageSquare className="w-5 h-5 text-thera-primary" />
-                <h2 className="font-semibold text-sm">Messages</h2>
-              </div>
-              <p className="text-sm text-thera-muted">No new messages.</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <NotebookPen className="w-5 h-5 text-thera-secondary" />
-                <h2 className="font-semibold text-sm">Session notes</h2>
-              </div>
-              <p className="text-sm text-thera-muted">Notes from your recent sessions live here.</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Clock4 className="w-5 h-5 text-thera-accent" />
-                <h2 className="font-semibold text-sm">Availability</h2>
-              </div>
-              <p className="text-sm text-thera-muted mb-3">Set the hours clients can book you.</p>
-              <button className="text-xs font-medium text-thera-primary hover:underline">Edit availability</button>
-            </div>
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Star className="w-5 h-5 text-thera-warning" />
-                <h2 className="font-semibold text-sm">Reviews</h2>
-              </div>
-              <p className="text-sm text-thera-muted">Client reviews will appear here.</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Bell className="w-5 h-5 text-thera-muted" />
-                <h2 className="font-semibold text-sm">Notifications</h2>
-              </div>
-              <p className="text-sm text-thera-muted">You&apos;re all caught up.</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <UserCircle2 className="w-5 h-5 text-thera-muted" />
-                <h2 className="font-semibold text-sm">Profile completion</h2>
-              </div>
-              <div className="w-full h-2 rounded-full bg-thera-ink/10 overflow-hidden mb-2">
-                <div className="h-full w-2/3 bg-thera-primary rounded-full" />
-              </div>
-              <p className="text-xs text-thera-muted">65% complete — add your credentials to finish.</p>
-            </div>
-          </div>
-        </div>
-      )}
+    <DashboardShell title="Your listing" subtitle="Signed in as">
+      {(session) => <ListingForm session={session} />}
     </DashboardShell>
   )
 }
