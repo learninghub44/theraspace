@@ -3,16 +3,21 @@
 import { motion } from "framer-motion"
 import { ShieldCheck } from "lucide-react"
 
-// Image direction: bright, natural-light photo of a therapist listening
-// attentively while a client speaks, in a warm, uncluttered office.
-// Swap the gradient placeholder below for a licensed photo at
-// /public/images/about-listening.jpg (or similar) once sourced —
-// intentionally left as a placeholder rather than an unverified hotlink.
-function ListeningPhotoPlaceholder() {
+// Photo: "People relaxing on a sofa in a sunlit room" by The Ridge Ohio,
+// free to use under the Unsplash License.
+// https://unsplash.com/photos/people-relaxing-on-a-sofa-in-a-sunlit-room-anoapVyOVyI
+function ListeningPhoto() {
   return (
-    <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-thera-primary/15 via-thera-secondary/10 to-thera-accent/15 border border-thera-ink/10">
+    <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-thera-ink/10">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="https://images.unsplash.com/photo-1780945806713-4bb884acec90?fm=jpg&q=80&w=1200&auto=format&fit=crop"
+        alt="A woman listening attentively, calm and present, in a warm sunlit room"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0" />
       <div className="absolute inset-0 flex items-end p-6">
-        <p className="text-sm text-thera-muted italic">
+        <p className="text-sm text-white/90 italic">
           &ldquo;Every person deserves a safe space to speak, be heard, and grow.&rdquo;
         </p>
       </div>
@@ -31,7 +36,7 @@ export function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <ListeningPhotoPlaceholder />
+            <ListeningPhoto />
           </motion.div>
 
           <motion.div
