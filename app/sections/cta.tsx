@@ -25,13 +25,13 @@ export function CTASection() {
           </h2>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="#therapists"
+            <Link
+              href="/therapists"
               className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-thera-primary/25 transition-all duration-300 hover:-translate-y-0.5"
             >
               <Search className="w-5 h-5" />
               Browse Therapists
-            </a>
+            </Link>
             <Link
               href="/signup"
               className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"

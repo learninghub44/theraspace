@@ -11,7 +11,7 @@ import { useTheme } from "next-themes"
 import { cn } from "@/app/lib/utils"
 
 const navLinks = [
-  { name: "Find Therapist", href: "#therapists", icon: Users },
+  { name: "Find Therapist", href: "/therapists", icon: Users },
   { name: "How It Works", href: "#how-it-works", icon: Sparkles },
   { name: "About", href: "/about", icon: null },
   { name: "Contact", href: "/contact", icon: Phone },
@@ -29,7 +29,7 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
 
-      const sections = ["features", "solutions", "ai", "security", "resources"]
+      const sections = ["therapists", "how-it-works"]
       for (const section of sections.reverse()) {
         const element = document.getElementById(section)
         if (element) {

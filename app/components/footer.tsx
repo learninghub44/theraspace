@@ -9,7 +9,7 @@ import {
 
 const footerLinks = {
   marketplace: [
-    { name: "Find Therapist", href: "/#therapists" },
+    { name: "Find Therapist", href: "/therapists" },
     { name: "List Yourself", href: "/signup" },
     { name: "How It Works", href: "/#how-it-works" },
   ],

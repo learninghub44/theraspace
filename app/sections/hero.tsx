@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { ArrowRight, Search, MapPin, CheckCircle2, Star } from "lucide-react"
 import { fadeInUp, staggerContainer } from "@/app/lib/animations"
 
@@ -65,6 +67,15 @@ function ProfilePreview() {
 }
 
 export function HeroSection() {
+  const router = useRouter()
+  const [search, setSearch] = useState("")
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    const params = search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ""
+    router.push(`/therapists${params}`)
+  }
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 overflow-hidden">
@@ -100,40 +111,42 @@ export function HeroSection() {
                 for you.
               </h1>
               <p className="text-lg lg:text-xl text-thera-muted max-w-xl leading-relaxed">
-                Therapists list themselves — qualifications, specialties, their own price. Reach out and book directly with them.
+                Therapists list themselves — qualifications, specialties, their own price. Reach out and contact them directly.
               </p>
             </motion.div>
 
             <motion.div variants={fadeInUp}>
               <form
-                action="#therapists"
+                onSubmit={handleSearch}
                 className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm max-w-xl"
               >
                 <div className="flex-1 flex items-center gap-2 px-3">
                   <Search className="w-4 h-4 text-thera-muted shrink-0" />
                   <input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     type="text"
                     placeholder="Search by issue, therapist, or language"
                     className="w-full bg-transparent py-2.5 text-sm text-thera-text placeholder:text-thera-muted focus:outline-none"
                   />
                 </div>
-                <a
-                  href="#therapists"
+                <button
+                  type="submit"
                   className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-thera-primary text-white rounded-xl font-medium text-sm hover:bg-thera-primary/90 transition-colors"
                 >
                   Search
-                </a>
+                </button>
               </form>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
-              <a
-                href="#therapists"
+              <Link
+                href="/therapists"
                 className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-thera-primary/25 transition-all duration-300 hover:-translate-y-0.5"
               >
                 Browse Therapists
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
               <Link
                 href="/signup"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"

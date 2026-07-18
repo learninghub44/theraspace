@@ -50,7 +50,7 @@ export function CategoriesSection() {
           {categories.map((cat, i) => (
             <motion.a
               key={cat.label}
-              href="#therapists"
+              href={`/therapists?category=${encodeURIComponent(cat.label)}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
