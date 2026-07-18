@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { ArrowRight, Search, MapPin, CheckCircle2, Star, ChevronDown } from "lucide-react"
+import { ArrowRight, Search, MapPin, ChevronDown } from "lucide-react"
 import { fadeInUp, staggerContainer } from "@/app/lib/animations"
 import { KENYA_LOCATIONS, REMOTE_OPTION } from "@/app/lib/locations"
 
@@ -15,55 +15,6 @@ function BreathingRings() {
       transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full breathing-rings pointer-events-none"
     />
-  )
-}
-
-// A single, real profile card — showing exactly what a visitor finds on
-// the marketplace, instead of a fabricated analytics dashboard.
-function ProfilePreview() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="relative max-w-sm mx-auto lg:mx-0"
-    >
-      <div className="rounded-3xl overflow-hidden border border-thera-ink/10 bg-thera-card shadow-xl shadow-thera-primary/10">
-        <div className="h-56 bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 relative">
-          <div className="absolute top-4 right-4 flex items-center gap-1 px-2.5 py-1 rounded-full bg-thera-bg/90 backdrop-blur-sm border border-thera-ink/10 text-xs font-medium text-thera-accent">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            Verified
-          </div>
-        </div>
-        <div className="p-6">
-          <h3 className="font-semibold text-lg">Dr. Amina Njoroge</h3>
-          <p className="text-sm text-thera-muted mb-3">Anxiety &amp; Stress Management</p>
-          <div className="flex items-center gap-3 text-sm mb-4">
-            <div className="flex items-center gap-1 text-thera-muted">
-              <MapPin className="w-3.5 h-3.5" /> Nairobi
-            </div>
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <Star key={s} className="w-3.5 h-3.5 text-thera-warning fill-thera-warning" />
-              ))}
-            </div>
-          </div>
-          <div className="w-full py-2.5 rounded-xl bg-thera-primary/10 text-thera-primary text-sm font-medium text-center">
-            Contact directly
-          </div>
-        </div>
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.9 }}
-        className="absolute -right-6 -bottom-6 p-4 rounded-2xl glass hidden sm:block"
-      >
-        <p className="text-xs text-thera-muted mb-0.5">Therapists list themselves</p>
-        <p className="text-sm font-semibold">No middleman, no fees</p>
-      </motion.div>
-    </motion.div>
   )
 }
 
@@ -91,12 +42,12 @@ export function HeroSection() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid place-items-center">
           <motion.div
             variants={staggerContainer}
             initial="initial"
             animate="animate"
-            className="space-y-8"
+            className="space-y-8 max-w-3xl text-center"
           >
             <motion.div variants={fadeInUp} className="space-y-4">
               <h1 className="font-display font-medium text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight">
@@ -105,17 +56,17 @@ export function HeroSection() {
                 <br />
                 for you.
               </h1>
-              <p className="text-lg lg:text-xl text-thera-muted max-w-xl leading-relaxed">
+              <p className="text-lg lg:text-xl text-thera-muted max-w-xl mx-auto leading-relaxed">
                 Every therapist here has written their own profile — their qualifications,
                 specialties, and pricing, in their own words. Find someone who fits, then reach
                 out to them directly. No forms, no waiting list, no middleman.
               </p>
             </motion.div>
 
-            <motion.div variants={fadeInUp}>
+            <motion.div variants={fadeInUp} className="flex justify-center">
               <form
                 onSubmit={handleSearch}
-                className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm max-w-xl"
+                className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm max-w-xl w-full"
               >
                 <div className="relative flex items-center gap-2 px-3 sm:border-r border-thera-ink/10 shrink-0">
                   <MapPin className="w-4 h-4 text-thera-muted shrink-0" />
@@ -153,7 +104,7 @@ export function HeroSection() {
               </form>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4">
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/therapists"
                 className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-thera-primary/25 transition-all duration-300 hover:-translate-y-0.5"
@@ -169,8 +120,6 @@ export function HeroSection() {
               </Link>
             </motion.div>
           </motion.div>
-
-          <ProfilePreview />
         </div>
       </div>
 
