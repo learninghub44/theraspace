@@ -42,6 +42,40 @@ export interface TherapistProfile {
   updated_at: string
 }
 
+// --- Listing subscription (billing) types ---
+// Back the therapist_subscriptions / therapist_subscription_payments tables
+// in supabase/migrations/0002_therapist_subscriptions.sql. A listing only
+// shows up publicly when status='approved' AND there's an active,
+// unexpired subscription — see TherapistDashboard's BillingCard.
+
+export type SubscriptionStatus = 'inactive' | 'active' | 'past_due' | 'cancelled'
+
+export interface TherapistSubscription {
+  id: string
+  user_id: string
+  status: SubscriptionStatus
+  paystack_customer_code: string | null
+  last_reference: string | null
+  amount: number
+  currency: string
+  current_period_end: string | null
+  last_payment_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface TherapistSubscriptionPayment {
+  id: string
+  user_id: string
+  reference: string
+  amount: number
+  currency: string
+  status: 'success' | 'failed'
+  channel: string | null
+  paid_at: string | null
+  created_at: string
+}
+
 export interface Clinic {
   id: string
   name: string

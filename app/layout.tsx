@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "TheraSpace — Find a Therapist in Kenya",
     template: "%s | TheraSpace",
   },
-  description: "A free directory of therapists across Kenya. Browse verified listings and contact a therapist directly — no booking fees, no middleman.",
+  description: "A directory of therapists across Kenya, free to browse. Contact a therapist directly — no booking fees, no middleman.",
   keywords: ["find a therapist Kenya", "therapist directory", "mental health support Kenya", "counseling Nairobi", "therapy marketplace"],
   authors: [{ name: "TheraSpace" }],
   creator: "TheraSpace",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     url: "https://mytherapist.christech.co.ke",
     siteName: "TheraSpace",
     title: "TheraSpace — Find a Therapist in Kenya",
-    description: "A free directory of therapists across Kenya — browse listings and contact a therapist directly.",
+    description: "A directory of therapists across Kenya, free to browse — contact a therapist directly.",
     images: [
       {
         url: "/og-image.jpg",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TheraSpace — Find a Therapist in Kenya",
-    description: "A free directory of therapists across Kenya — browse listings and contact a therapist directly.",
+    description: "A directory of therapists across Kenya, free to browse — contact a therapist directly.",
     images: ["/og-image.jpg"],
   },
   robots: {

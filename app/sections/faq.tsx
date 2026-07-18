@@ -8,11 +8,11 @@ import { cn } from "@/app/lib/utils"
 const faqs = [
   {
     question: "Is TheraSpace free?",
-    answer: "Yes. Listing yourself as a therapist is free, and browsing the directory is free. We don't charge fees on sessions you book.",
+    answer: "Browsing the directory is free for clients. Therapists pay KES 1,000/month to be listed — no commission on sessions, no other fees.",
   },
   {
-    question: "Do you handle bookings or payments?",
-    answer: "No. TheraSpace is a directory — you contact a therapist directly by phone or email and arrange sessions and payment between yourselves.",
+    question: "Do you handle bookings or session payments?",
+    answer: "No. TheraSpace is a directory — you contact a therapist directly by phone or email and arrange sessions and payment between yourselves. The KES 1,000/month only covers the therapist's listing.",
   },
   {
     question: "How are therapists verified?",

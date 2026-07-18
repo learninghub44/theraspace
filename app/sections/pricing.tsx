@@ -5,18 +5,14 @@ import Link from "next/link"
 import { Check, ArrowRight, Sparkles } from "lucide-react"
 
 const features = [
-  "Unlimited Clients",
-  "Unlimited Notes",
-  "Unlimited Appointments",
-  "Unlimited AI Features",
-  "Unlimited Storage",
-  "Unlimited Messaging",
-  "Unlimited Reports",
-  "Unlimited Clinics",
-  "Unlimited Receptionists",
-  "Email Support",
-  "Updates Included",
-  "Cancel Anytime",
+  "Public marketplace listing",
+  "Photo, bio & qualifications",
+  "Your own pricing & specialties",
+  "Direct client contact, no commission",
+  "Edit your listing anytime",
+  "Admin-verified badge",
+  "M-Pesa & card payment",
+  "Cancel anytime",
 ]
 
 export function PricingSection() {
@@ -45,7 +41,7 @@ export function PricingSection() {
             <span className="text-gradient">Everything included.</span>
           </h2>
           <p className="text-lg text-thera-muted max-w-2xl mx-auto">
-            No tiers, no limits, no hidden fees. Get full access to every feature for one flat monthly price.
+            One flat price to be listed on the marketplace. No commission on sessions, no hidden fees.
           </p>
         </motion.div>
 
@@ -70,14 +66,14 @@ export function PricingSection() {
                   <span className="text-xl text-thera-muted ml-2">/month</span>
                 </div>
                 <p className="text-thera-muted mb-8">
-                  Billed monthly via Paystack. No contracts, cancel anytime. 14-day free trial.
+                  Billed monthly via Paystack. No contracts, cancel anytime.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link
                     href="/signup"
                     className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-thera-primary to-thera-secondary rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-thera-primary/25 transition-all duration-300 hover:-translate-y-0.5"
                   >
-                    Start Free Trial
+                    Get Listed
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link

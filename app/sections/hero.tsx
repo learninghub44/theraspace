@@ -88,7 +88,7 @@ export function HeroSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-thera-primary opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-thera-primary" />
                 </span>
-                <span className="text-thera-primary font-medium">A free directory, not a booking platform</span>
+                <span className="text-thera-primary font-medium">Free to browse, not a booking platform</span>
               </div>
             </motion.div>
 
@@ -138,7 +138,7 @@ export function HeroSection() {
                 href="/signup"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"
               >
-                List yourself, free
+                List yourself — KES 1,000/mo
               </Link>
             </motion.div>
           </motion.div>

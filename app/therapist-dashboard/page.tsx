@@ -8,9 +8,12 @@ import {
   Clock4,
   XCircle,
   Save,
+  CreditCard,
+  AlertTriangle,
 } from "lucide-react"
 import { DashboardShell } from "@/app/components/dashboard-shell"
 import { supabase } from "@/app/lib/supabase"
+import { useSubscription, isSubscriptionActive } from "@/app/lib/use-subscription"
 import type { Session } from "@supabase/supabase-js"
 import type { TherapistProfile } from "@/types"
 
@@ -179,7 +182,8 @@ function ListingForm({ session }: { session: Session }) {
         </div>
         <p className="text-sm text-thera-muted mb-2">
           This is what visitors see in the marketplace. TheraSpace doesn&apos;t handle
-          bookings or payments — clients contact you directly using the details below.
+          session bookings or payments between you and clients — they contact you directly
+          using the details below. Your KES 1,000/month subscription only covers being listed.
         </p>
         {listing?.status === "rejected" && listing.rejection_reason && (
           <p className="text-sm text-thera-danger bg-thera-danger/10 border border-thera-danger/20 rounded-xl px-4 py-3 mt-3">
@@ -345,10 +349,134 @@ function ListingForm({ session }: { session: Session }) {
   )
 }
 
+function BillingCard({ session }: { session: Session }) {
+  const { subscription, status, refresh } = useSubscription(session)
+  const [paying, setPaying] = useState(false)
+  const [cancelling, setCancelling] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // If we just came back from a Paystack redirect, poll a few times —
+  // the webhook that flips the row to "active" can land a second or two
+  // after the browser is redirected back.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (!params.has("reference") && !params.has("trxref")) return
+    let attempts = 0
+    const interval = setInterval(() => {
+      attempts += 1
+      refresh()
+      if (attempts >= 5) clearInterval(interval)
+    }, 2000)
+    return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const active = isSubscriptionActive(subscription)
+
+  const handleSubscribe = async () => {
+    setPaying(true)
+    setError(null)
+    const {
+      data: { session: freshSession },
+    } = await supabase.auth.getSession()
+    const { data, error: invokeError } = await supabase.functions.invoke("paystack-initialize", {
+      headers: { Authorization: `Bearer ${freshSession?.access_token ?? ""}` },
+    })
+    setPaying(false)
+    if (invokeError || !data?.authorization_url) {
+      setError((data as any)?.error ?? invokeError?.message ?? "Could not start payment.")
+      return
+    }
+    window.location.href = data.authorization_url
+  }
+
+  const handleCancel = async () => {
+    setCancelling(true)
+    setError(null)
+    const {
+      data: { session: freshSession },
+    } = await supabase.auth.getSession()
+    const { error: invokeError } = await supabase.functions.invoke("paystack-cancel", {
+      headers: { Authorization: `Bearer ${freshSession?.access_token ?? ""}` },
+    })
+    setCancelling(false)
+    if (invokeError) {
+      setError(invokeError.message)
+      return
+    }
+    refresh()
+  }
+
+  return (
+    <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+      <div className="flex items-center gap-2 mb-2">
+        <CreditCard className="w-5 h-5 text-thera-primary" />
+        <h2 className="font-semibold">Listing subscription</h2>
+      </div>
+      <p className="text-sm text-thera-muted mb-4">
+        Your listing only appears in the public marketplace while it&apos;s approved{" "}
+        <span className="font-medium">and</span> your subscription is active — KES 1,000/month, via
+        M-Pesa or card.
+      </p>
+
+      {error && (
+        <p className="text-sm text-thera-danger bg-thera-danger/10 border border-thera-danger/20 rounded-xl px-4 py-3 mb-4">
+          {error}
+        </p>
+      )}
+
+      {status === "loading" ? (
+        <div className="flex items-center gap-2 text-thera-muted text-sm py-4">
+          <Loader2 className="w-4 h-4 animate-spin" /> Checking subscription...
+        </div>
+      ) : active ? (
+        <div className="space-y-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-thera-success/10 text-thera-success">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            Active — paid through{" "}
+            {subscription?.current_period_end
+              ? new Date(subscription.current_period_end).toLocaleDateString()
+              : ""}
+          </span>
+          <div>
+            <button
+              onClick={handleCancel}
+              disabled={cancelling}
+              className="text-xs text-thera-muted hover:text-thera-danger underline disabled:opacity-50"
+            >
+              {cancelling ? "Cancelling..." : "Cancel — stay listed until the paid period ends"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-thera-warning/10 text-thera-warning">
+            <AlertTriangle className="w-3.5 h-3.5" />
+            {subscription?.status === "past_due" ? "Last payment failed" : "Not subscribed — not visible publicly"}
+          </span>
+          <button
+            onClick={handleSubscribe}
+            disabled={paying}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-thera-primary/25 transition-all disabled:opacity-50"
+          >
+            {paying ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
+            Pay KES 1,000 & go live
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function TherapistDashboardPage() {
   return (
     <DashboardShell title="Your listing" subtitle="Signed in as">
-      {(session) => <ListingForm session={session} />}
+      {(session) => (
+        <div className="space-y-6">
+          <BillingCard session={session} />
+          <ListingForm session={session} />
+        </div>
+      )}
     </DashboardShell>
   )
 }
