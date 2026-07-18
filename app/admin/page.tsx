@@ -87,7 +87,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <DashboardShell title="Platform overview" subtitle="Admin" requiredRole="admin">
+    <DashboardShell title="Platform overview" subtitle="Admin" requiredRole="admin" loginHref="/admin/login">
       {() => (
         <div className="space-y-6">
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">

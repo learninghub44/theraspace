@@ -13,10 +13,12 @@ interface DashboardShellProps {
   subtitle?: string
   /** Restrict this dashboard to a single role (e.g. "admin"). Omit for any signed-in user. */
   requiredRole?: Profile["role"]
+  /** Where "sign in" / "wrong account" links point. Defaults to the main /login page. */
+  loginHref?: string
   children: (session: Session, profile: Profile | null) => ReactNode
 }
 
-export function DashboardShell({ title, subtitle, requiredRole, children }: DashboardShellProps) {
+export function DashboardShell({ title, subtitle, requiredRole, loginHref = "/login", children }: DashboardShellProps) {
   const [session, setSession] = useState<Session | null>(null)
   const [status, setStatus] = useState<"checking" | "ready" | "signed-out">("checking")
   const [signingOut, setSigningOut] = useState(false)
@@ -56,7 +58,7 @@ export function DashboardShell({ title, subtitle, requiredRole, children }: Dash
     setSigningOut(true)
     await supabase.auth.signOut()
     setSigningOut(false)
-    window.location.href = "/login"
+    window.location.href = loginHref
   }
 
   if (status === "checking") {
@@ -78,7 +80,7 @@ export function DashboardShell({ title, subtitle, requiredRole, children }: Dash
           <h1 className="text-2xl font-bold mb-3">You&apos;re not signed in</h1>
           <p className="text-thera-muted mb-6">Sign in to view your dashboard.</p>
           <Link
-            href="/login"
+            href={loginHref}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary text-white rounded-xl font-semibold"
           >
             Go to Login

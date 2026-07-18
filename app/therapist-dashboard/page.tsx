@@ -12,6 +12,7 @@ import {
   AlertTriangle,
 } from "lucide-react"
 import { DashboardShell } from "@/app/components/dashboard-shell"
+import { PhotoDropzone } from "@/app/components/photo-dropzone"
 import { supabase } from "@/app/lib/supabase"
 import { useSubscription, isSubscriptionActive } from "@/app/lib/use-subscription"
 import type { Session } from "@supabase/supabase-js"
@@ -283,12 +284,11 @@ function ListingForm({ session }: { session: Session }) {
             <p className="text-xs text-thera-muted mt-1">You set your own rate — this is a directory, not a checkout.</p>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Photo URL</label>
-            <input
+            <label className="block text-sm font-medium mb-2">Photo</label>
+            <PhotoDropzone
+              userId={session.user.id}
               value={form.photo_url}
-              onChange={(e) => setForm((f) => ({ ...f, photo_url: e.target.value }))}
-              placeholder="https://..."
-              className="w-full px-4 py-2.5 rounded-xl bg-thera-ink/5 border border-thera-ink/10 focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+              onChange={(url) => setForm((f) => ({ ...f, photo_url: url }))}
             />
           </div>
         </div>

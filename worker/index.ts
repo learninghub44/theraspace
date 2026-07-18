@@ -10,6 +10,10 @@
  *   POST /api/newsletter           -> insert into newsletter_subscribers
  *   POST /api/paystack/initialize  -> start a subscription charge (requires session)
  *   POST /api/paystack/cancel      -> mark a subscription cancelled (requires session)
+ *   GET  /api/paystack/verify      -> confirm a reference's real status with Paystack directly
+ *                                      (requires session; used by the post-checkout status page
+ *                                      so success/failure/cancellation never depends on the
+ *                                      webhook having landed yet)
  *   POST /api/paystack/webhook     -> Paystack calls this on charge success/failure
  *
  * All of it writes to Supabase using the service role key (server-side
@@ -43,7 +47,7 @@ const SUBSCRIPTION_PERIOD_DAYS = 30
 function corsHeaders(origin: string) {
   return {
     "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
   }
@@ -281,7 +285,7 @@ async function handlePaystackInitialize(request: Request, env: Env, origin: stri
         currency: "KES",
         reference,
         channels: ["card", "mobile_money"],
-        callback_url: `${env.ALLOWED_ORIGIN}/therapist-dashboard/`,
+        callback_url: `${env.ALLOWED_ORIGIN}/therapist-dashboard/payment-status/?reference=${encodeURIComponent(reference)}`,
         metadata: { user_id: user.id, purpose: "therapist_listing_subscription" },
       }),
     })
@@ -356,6 +360,154 @@ function timingSafeEqual(a: string, b: string): boolean {
   return diff === 0
 }
 
+/** Record a successful charge: extend the subscription and log the payment. Idempotent. */
+async function recordChargeSuccess(env: Env, data: any, rawEvent: unknown): Promise<void> {
+  const userId = data?.metadata?.user_id
+  if (!userId) return
+
+  const existing = await supabaseSelectOne<{ current_period_end: string | null }>(
+    env,
+    "therapist_subscriptions",
+    `user_id=eq.${userId}`,
+    "current_period_end"
+  )
+
+  const now = new Date()
+  // Stack a renewal on top of remaining time rather than resetting the
+  // clock, so paying early never costs the therapist days.
+  const base =
+    existing?.current_period_end && new Date(existing.current_period_end) > now
+      ? new Date(existing.current_period_end)
+      : now
+  const newPeriodEnd = new Date(base.getTime() + SUBSCRIPTION_PERIOD_DAYS * 24 * 60 * 60 * 1000)
+
+  const { ok: subOk, status: subStatus, body: subBody } = await supabaseInsert(
+    env,
+    "therapist_subscriptions",
+    {
+      user_id: userId,
+      status: "active",
+      paystack_customer_code: data.customer?.customer_code ?? null,
+      last_reference: data.reference,
+      amount: data.amount,
+      currency: data.currency ?? "KES",
+      current_period_end: newPeriodEnd.toISOString(),
+      last_payment_at: now.toISOString(),
+    },
+    { onConflict: "user_id", resolution: "merge-duplicates" }
+  )
+  if (!subOk) console.error("Failed to upsert subscription:", subStatus, subBody)
+
+  // Paystack retries webhooks, and verify can race the webhook too — a
+  // duplicate reference just means we've already recorded this charge.
+  const { ok: payOk, status: payStatus, body: payBody } = await supabaseInsert(
+    env,
+    "therapist_subscription_payments",
+    {
+      user_id: userId,
+      reference: data.reference,
+      amount: data.amount,
+      currency: data.currency ?? "KES",
+      status: "success",
+      channel: data.channel ?? null,
+      paid_at: data.paid_at ?? now.toISOString(),
+      raw_event: rawEvent,
+    },
+    { onConflict: "reference", resolution: "ignore-duplicates" }
+  )
+  if (!payOk) console.error("Failed to log payment:", payStatus, payBody)
+}
+
+/** Record a failed charge: mark the subscription past_due and log the failed payment. Idempotent. */
+async function recordChargeFailure(env: Env, data: any, rawEvent: unknown): Promise<void> {
+  const userId = data?.metadata?.user_id
+  if (!userId) return
+
+  await supabasePatch(env, "therapist_subscriptions", `user_id=eq.${userId}`, {
+    status: "past_due",
+  })
+
+  const { ok: payOk, status: payStatus, body: payBody } = await supabaseInsert(
+    env,
+    "therapist_subscription_payments",
+    {
+      user_id: userId,
+      reference: data.reference,
+      amount: data.amount,
+      currency: data.currency ?? "KES",
+      status: "failed",
+      channel: data.channel ?? null,
+      paid_at: null,
+      raw_event: rawEvent,
+    },
+    { onConflict: "reference", resolution: "ignore-duplicates" }
+  )
+  if (!payOk) console.error("Failed to log failed payment:", payStatus, payBody)
+}
+
+// ============================================================
+// Paystack: verify (requires session — the post-checkout status page calls
+// this so it can show a real result immediately instead of waiting on the
+// webhook, and so the result can never be spoofed by a query param alone)
+// ============================================================
+
+async function handlePaystackVerify(request: Request, env: Env, origin: string): Promise<Response> {
+  if (!env.PAYSTACK_SECRET_KEY) {
+    return jsonResponse({ error: "Server misconfigured: PAYSTACK_SECRET_KEY not set" }, 500, origin)
+  }
+
+  const user = await verifySupabaseUser(env, bearerToken(request))
+  if (!user) return jsonResponse({ error: "Invalid session" }, 401, origin)
+
+  const url = new URL(request.url)
+  const reference = url.searchParams.get("reference")
+  if (!reference) {
+    return jsonResponse({ error: "Missing reference" }, 400, origin)
+  }
+
+  let verifyData: any
+  try {
+    const verifyRes = await fetch(
+      `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
+      { headers: { Authorization: `Bearer ${env.PAYSTACK_SECRET_KEY}` } }
+    )
+    verifyData = await verifyRes.json()
+    if (!verifyRes.ok || !verifyData?.status) {
+      return jsonResponse({ error: verifyData?.message ?? "Could not verify transaction" }, 502, origin)
+    }
+  } catch (err) {
+    console.error("Paystack verify error:", err)
+    return jsonResponse({ error: "Could not reach Paystack" }, 502, origin)
+  }
+
+  const data = verifyData.data
+  // The reference belongs to whoever's metadata.user_id it carries — never
+  // trust the caller's session alone to decide whose subscription to touch.
+  if (data?.metadata?.user_id !== user.id) {
+    return jsonResponse({ error: "This reference does not belong to your account." }, 403, origin)
+  }
+
+  const gatewayStatus: string = data?.status ?? "unknown"
+
+  if (gatewayStatus === "success") {
+    await recordChargeSuccess(env, data, verifyData)
+    return jsonResponse({ result: "success" }, 200, origin)
+  }
+
+  if (gatewayStatus === "failed") {
+    await recordChargeFailure(env, data, verifyData)
+    return jsonResponse({ result: "failed" }, 200, origin)
+  }
+
+  if (gatewayStatus === "abandoned") {
+    return jsonResponse({ result: "cancelled" }, 200, origin)
+  }
+
+  // "pending", "queued", etc. — mobile money charges in particular can take
+  // a little while to settle after the redirect back.
+  return jsonResponse({ result: "pending" }, 200, origin)
+}
+
 async function handlePaystackWebhook(request: Request, env: Env): Promise<Response> {
   if (!env.PAYSTACK_SECRET_KEY) return new Response("Server misconfigured", { status: 500 })
 
@@ -377,86 +529,9 @@ async function handlePaystackWebhook(request: Request, env: Env): Promise<Respon
 
   try {
     if (event.event === "charge.success") {
-      const data = event.data
-      const userId = data?.metadata?.user_id
-      if (userId) {
-        const existing = await supabaseSelectOne<{ current_period_end: string | null }>(
-          env,
-          "therapist_subscriptions",
-          `user_id=eq.${userId}`,
-          "current_period_end"
-        )
-
-        const now = new Date()
-        // Stack a renewal on top of remaining time rather than resetting
-        // the clock, so paying early never costs the therapist days.
-        const base =
-          existing?.current_period_end && new Date(existing.current_period_end) > now
-            ? new Date(existing.current_period_end)
-            : now
-        const newPeriodEnd = new Date(base.getTime() + SUBSCRIPTION_PERIOD_DAYS * 24 * 60 * 60 * 1000)
-
-        const { ok: subOk, status: subStatus, body: subBody } = await supabaseInsert(
-          env,
-          "therapist_subscriptions",
-          {
-            user_id: userId,
-            status: "active",
-            paystack_customer_code: data.customer?.customer_code ?? null,
-            last_reference: data.reference,
-            amount: data.amount,
-            currency: data.currency ?? "KES",
-            current_period_end: newPeriodEnd.toISOString(),
-            last_payment_at: now.toISOString(),
-          },
-          { onConflict: "user_id", resolution: "merge-duplicates" }
-        )
-        if (!subOk) console.error("Failed to upsert subscription:", subStatus, subBody)
-
-        // Paystack retries webhooks; a duplicate reference just means
-        // we've already recorded this charge, which is fine to ignore.
-        const { ok: payOk, status: payStatus, body: payBody } = await supabaseInsert(
-          env,
-          "therapist_subscription_payments",
-          {
-            user_id: userId,
-            reference: data.reference,
-            amount: data.amount,
-            currency: data.currency ?? "KES",
-            status: "success",
-            channel: data.channel ?? null,
-            paid_at: data.paid_at ?? now.toISOString(),
-            raw_event: event,
-          },
-          { onConflict: "reference", resolution: "ignore-duplicates" }
-        )
-        if (!payOk) console.error("Failed to log payment:", payStatus, payBody)
-      }
+      await recordChargeSuccess(env, event.data, event)
     } else if (event.event === "charge.failed") {
-      const data = event.data
-      const userId = data?.metadata?.user_id
-      if (userId) {
-        await supabasePatch(env, "therapist_subscriptions", `user_id=eq.${userId}`, {
-          status: "past_due",
-        })
-
-        const { ok: payOk, status: payStatus, body: payBody } = await supabaseInsert(
-          env,
-          "therapist_subscription_payments",
-          {
-            user_id: userId,
-            reference: data.reference,
-            amount: data.amount,
-            currency: data.currency ?? "KES",
-            status: "failed",
-            channel: data.channel ?? null,
-            paid_at: null,
-            raw_event: event,
-          },
-          { onConflict: "reference", resolution: "ignore-duplicates" }
-        )
-        if (!payOk) console.error("Failed to log failed payment:", payStatus, payBody)
-      }
+      await recordChargeFailure(env, event.data, event)
     }
     // Other event types (e.g. transfer events) aren't relevant to this
     // flow and are acknowledged without action.
@@ -475,7 +550,14 @@ async function handlePaystackWebhook(request: Request, env: Env): Promise<Respon
 // Router
 // ============================================================
 
-const RATE_LIMITED_ROUTES = new Set(["/api/contact", "/api/newsletter", "/api/paystack/initialize", "/api/paystack/cancel"])
+const RATE_LIMITED_ROUTES = new Set([
+  "/api/contact",
+  "/api/newsletter",
+  "/api/paystack/initialize",
+  "/api/paystack/cancel",
+  "/api/paystack/verify",
+])
+const GET_ROUTES = new Set(["/api/paystack/verify"])
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -495,7 +577,8 @@ export default {
         if (request.method === "OPTIONS") {
           return new Response(null, { headers: corsHeaders(origin) })
         }
-        if (request.method !== "POST") {
+        const expectedMethod = GET_ROUTES.has(url.pathname) ? "GET" : "POST"
+        if (request.method !== expectedMethod) {
           return jsonResponse({ error: "Method not allowed" }, 405, origin)
         }
 
@@ -521,6 +604,8 @@ export default {
             return await handlePaystackInitialize(request, env, origin)
           case "/api/paystack/cancel":
             return await handlePaystackCancel(request, env, origin)
+          case "/api/paystack/verify":
+            return await handlePaystackVerify(request, env, origin)
         }
       }
 
