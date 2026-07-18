@@ -6,6 +6,7 @@ import {
   ArrowUpRight, Mail, MapPin, Phone,
   Twitter, Linkedin, Github, Instagram
 } from "lucide-react"
+import { LogoMark } from "@/app/components/logo"
 
 const footerLinks = {
   marketplace: [
@@ -66,13 +67,8 @@ export function Footer() {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="relative w-8 h-8">
-                <div className="absolute inset-0 bg-gradient-to-br from-thera-primary via-thera-secondary to-thera-accent rounded-lg opacity-80" />
-                <div className="absolute inset-1 bg-thera-bg rounded-md flex items-center justify-center">
-                  <span className="text-sm font-bold text-gradient">T</span>
-                </div>
-              </div>
-              <span className="text-lg font-bold">
+              <LogoMark className="w-8 h-8" />
+              <span className="text-lg font-display font-medium">
                 Thera<span className="text-thera-primary">Space</span>
               </span>
             </Link>

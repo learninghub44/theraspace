@@ -11,6 +11,7 @@ import { useTheme } from "next-themes"
 import { cn } from "@/app/lib/utils"
 import { supabase } from "@/app/lib/supabase"
 import { useProfile } from "@/app/lib/use-profile"
+import { LogoMark } from "@/app/components/logo"
 import type { Session } from "@supabase/supabase-js"
 
 const navLinks = [
@@ -91,13 +92,8 @@ export function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="relative w-8 h-8 lg:w-10 lg:h-10">
-                <div className="absolute inset-0 bg-gradient-to-br from-thera-primary via-thera-secondary to-thera-accent rounded-xl opacity-80 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-1 bg-thera-bg rounded-lg flex items-center justify-center">
-                  <span className="text-lg lg:text-xl font-bold text-gradient">T</span>
-                </div>
-              </div>
-              <span className="text-xl lg:text-2xl font-bold tracking-tight">
+              <LogoMark className="w-8 h-8 lg:w-10 lg:h-10 group-hover:scale-105 transition-transform" />
+              <span className="text-xl lg:text-2xl font-display font-medium tracking-tight">
                 Thera<span className="text-thera-primary">Space</span>
               </span>
             </Link>
