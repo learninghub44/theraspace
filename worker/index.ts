@@ -482,40 +482,53 @@ export default {
     const url = new URL(request.url)
     const origin = env.ALLOWED_ORIGIN || url.origin
 
-    // Webhook first: no CORS/browser concerns (Paystack calls this
-    // server-to-server), and it must never be rate-limited by IP since
-    // every legitimate call comes from Paystack's own infrastructure.
-    if (url.pathname === "/api/paystack/webhook") {
-      if (request.method !== "POST") return new Response("Method not allowed", { status: 405 })
-      return handlePaystackWebhook(request, env)
+    try {
+      // Webhook first: no CORS/browser concerns (Paystack calls this
+      // server-to-server), and it must never be rate-limited by IP since
+      // every legitimate call comes from Paystack's own infrastructure.
+      if (url.pathname === "/api/paystack/webhook") {
+        if (request.method !== "POST") return new Response("Method not allowed", { status: 405 })
+        return await handlePaystackWebhook(request, env)
+      }
+
+      if (RATE_LIMITED_ROUTES.has(url.pathname)) {
+        if (request.method === "OPTIONS") {
+          return new Response(null, { headers: corsHeaders(origin) })
+        }
+        if (request.method !== "POST") {
+          return jsonResponse({ error: "Method not allowed" }, 405, origin)
+        }
+
+        // Rate limiting is a nice-to-have, not the security boundary (input
+        // validation and the webhook signature check are) — if the binding
+        // is missing/misconfigured, log it and let the request through
+        // rather than 500ing every legitimate submission.
+        try {
+          const { success } = await env.RATE_LIMITER.limit({ key: `${url.pathname}:${clientIp(request)}` })
+          if (!success) {
+            return jsonResponse({ error: "Too many requests. Please try again later." }, 429, origin)
+          }
+        } catch (err) {
+          console.error("Rate limiter unavailable, allowing request through:", err)
+        }
+
+        switch (url.pathname) {
+          case "/api/contact":
+            return await handleContact(request, env, origin)
+          case "/api/newsletter":
+            return await handleNewsletter(request, env, origin)
+          case "/api/paystack/initialize":
+            return await handlePaystackInitialize(request, env, origin)
+          case "/api/paystack/cancel":
+            return await handlePaystackCancel(request, env, origin)
+        }
+      }
+
+      // Everything else: serve the static export as-is.
+      return await env.ASSETS.fetch(request)
+    } catch (err) {
+      console.error("Unhandled Worker error:", err)
+      return jsonResponse({ error: "Internal server error" }, 500, origin)
     }
-
-    if (RATE_LIMITED_ROUTES.has(url.pathname)) {
-      if (request.method === "OPTIONS") {
-        return new Response(null, { headers: corsHeaders(origin) })
-      }
-      if (request.method !== "POST") {
-        return jsonResponse({ error: "Method not allowed" }, 405, origin)
-      }
-
-      const { success } = await env.RATE_LIMITER.limit({ key: `${url.pathname}:${clientIp(request)}` })
-      if (!success) {
-        return jsonResponse({ error: "Too many requests. Please try again later." }, 429, origin)
-      }
-
-      switch (url.pathname) {
-        case "/api/contact":
-          return handleContact(request, env, origin)
-        case "/api/newsletter":
-          return handleNewsletter(request, env, origin)
-        case "/api/paystack/initialize":
-          return handlePaystackInitialize(request, env, origin)
-        case "/api/paystack/cancel":
-          return handlePaystackCancel(request, env, origin)
-      }
-    }
-
-    // Everything else: serve the static export as-is.
-    return env.ASSETS.fetch(request)
   },
 }
