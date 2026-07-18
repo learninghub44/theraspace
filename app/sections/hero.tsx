@@ -4,8 +4,9 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { ArrowRight, Search, MapPin, CheckCircle2, Star } from "lucide-react"
+import { ArrowRight, Search, MapPin, CheckCircle2, Star, ChevronDown } from "lucide-react"
 import { fadeInUp, staggerContainer } from "@/app/lib/animations"
+import { KENYA_LOCATIONS, REMOTE_OPTION } from "@/app/lib/locations"
 
 function BreathingRings() {
   return (
@@ -69,11 +70,15 @@ function ProfilePreview() {
 export function HeroSection() {
   const router = useRouter()
   const [search, setSearch] = useState("")
+  const [location, setLocation] = useState("")
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    const params = search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ""
-    router.push(`/therapists${params}`)
+    const params = new URLSearchParams()
+    if (search.trim()) params.set("q", search.trim())
+    if (location) params.set("location", location)
+    const qs = params.toString()
+    router.push(`/therapists${qs ? `?${qs}` : ""}`)
   }
 
   return (
@@ -112,6 +117,23 @@ export function HeroSection() {
                 onSubmit={handleSearch}
                 className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm max-w-xl"
               >
+                <div className="relative flex items-center gap-2 px-3 sm:border-r border-thera-ink/10 shrink-0">
+                  <MapPin className="w-4 h-4 text-thera-muted shrink-0" />
+                  <select
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="appearance-none bg-transparent py-2.5 pr-5 text-sm text-thera-text focus:outline-none max-w-[9.5rem] sm:max-w-[8rem]"
+                  >
+                    <option value="">Any location</option>
+                    <option value={REMOTE_OPTION}>{REMOTE_OPTION}</option>
+                    {KENYA_LOCATIONS.map((loc) => (
+                      <option key={loc} value={loc}>
+                        {loc}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-3.5 h-3.5 text-thera-muted absolute right-2.5 pointer-events-none" />
+                </div>
                 <div className="flex-1 flex items-center gap-2 px-3">
                   <Search className="w-4 h-4 text-thera-muted shrink-0" />
                   <input

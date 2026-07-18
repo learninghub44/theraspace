@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Search, Loader2, SlidersHorizontal, X } from "lucide-react"
+import { Search, Loader2, SlidersHorizontal, X, MapPin, ChevronDown } from "lucide-react"
 import { supabase } from "@/app/lib/supabase"
 import { TherapistCard } from "@/app/components/therapist-card"
+import { KENYA_LOCATIONS, REMOTE_OPTION } from "@/app/lib/locations"
 import type { TherapistProfile } from "@/types"
 
 const PAGE_SIZE = 12
@@ -57,11 +58,16 @@ export default function TherapistsDirectoryPage() {
     const params = new URLSearchParams(window.location.search)
     const q = params.get("q")
     const cat = params.get("category")
+    const loc = params.get("location")
     if (q) {
       setQuery(q)
       setDebouncedQuery(q)
     }
     if (cat) setCategory(cat)
+    if (loc) {
+      setLocation(loc)
+      setDebouncedLocation(loc)
+    }
   }, [])
 
   // Debounce free-text inputs so we're not querying on every keystroke.
@@ -90,7 +96,9 @@ export default function TherapistsDirectoryPage() {
       if (category) {
         q = q.ilike("specialty", `%${category}%`)
       }
-      if (debouncedLocation.trim()) {
+      if (debouncedLocation.trim() === REMOTE_OPTION) {
+        q = q.contains("session_modes", ["video"])
+      } else if (debouncedLocation.trim()) {
         q = q.ilike("location", `%${debouncedLocation.trim()}%`)
       }
       if (sessionMode) {
@@ -167,6 +175,23 @@ export default function TherapistsDirectoryPage() {
 
         {/* Search bar */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
+          <div className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm sm:w-56 shrink-0 relative">
+            <MapPin className="w-4 h-4 text-thera-muted shrink-0" />
+            <select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="appearance-none bg-transparent w-full text-sm focus:outline-none pr-5"
+            >
+              <option value="">All locations</option>
+              <option value={REMOTE_OPTION}>{REMOTE_OPTION}</option>
+              {KENYA_LOCATIONS.map((loc) => (
+                <option key={loc} value={loc}>
+                  {loc}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-thera-muted absolute right-3 pointer-events-none" />
+          </div>
           <div className="flex-1 flex items-center gap-2 px-4 py-3 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
             <Search className="w-4 h-4 text-thera-muted shrink-0" />
             <input
@@ -185,13 +210,13 @@ export default function TherapistsDirectoryPage() {
           <button
             onClick={() => setFiltersOpen((o) => !o)}
             className={`inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl border text-sm font-medium transition-colors ${
-              filtersOpen || activeFilterCount > 0
+              filtersOpen || sessionMode
                 ? "border-thera-primary/40 bg-thera-primary/10 text-thera-primary"
                 : "border-thera-ink/10 hover:bg-thera-ink/5"
             }`}
           >
             <SlidersHorizontal className="w-4 h-4" />
-            Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
+            Filters{sessionMode ? " (1)" : ""}
           </button>
         </div>
 
@@ -219,12 +244,6 @@ export default function TherapistsDirectoryPage() {
             animate={{ opacity: 1, height: "auto" }}
             className="flex flex-col sm:flex-row gap-3 p-4 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 mb-6"
           >
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location (e.g. Nairobi)"
-              className="flex-1 px-4 py-2.5 rounded-xl bg-thera-card border border-thera-ink/10 text-sm focus:outline-none focus:border-thera-primary/50"
-            />
             <div className="flex gap-2 flex-wrap">
               {SESSION_MODE_OPTIONS.map((opt) => (
                 <button

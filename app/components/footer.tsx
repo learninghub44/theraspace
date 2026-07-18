@@ -42,7 +42,8 @@ export function Footer() {
               Stay in the <span className="text-gradient">loop</span>
             </h3>
             <p className="text-thera-muted text-lg">
-              Get the latest updates on features, AI improvements, and practice management tips.
+              Get notified when new therapists join near you, and when we add new specialties to
+              the directory.
             </p>
           </div>
           <form className="flex gap-3">
