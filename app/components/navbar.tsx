@@ -5,10 +5,13 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   Menu, X, Moon, Sun, ChevronDown, 
-  Shield, Sparkles, Users, Phone
+  Shield, Sparkles, Users, Phone, LayoutDashboard
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { cn } from "@/app/lib/utils"
+import { supabase } from "@/app/lib/supabase"
+import { useProfile } from "@/app/lib/use-profile"
+import type { Session } from "@supabase/supabase-js"
 
 const navLinks = [
   { name: "Find Therapist", href: "/therapists", icon: Users },
@@ -23,6 +26,22 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("")
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [session, setSession] = useState<Session | null>(null)
+  const { profile } = useProfile(session)
+
+  useEffect(() => {
+    let active = true
+    supabase.auth.getSession().then(({ data }) => {
+      if (active) setSession(data.session)
+    })
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      if (active) setSession(newSession)
+    })
+    return () => {
+      active = false
+      listener.subscription.unsubscribe()
+    }
+  }, [])
 
   useEffect(() => {
     setMounted(true)
@@ -127,21 +146,40 @@ export function Navbar() {
                 </button>
               )}
 
-              {/* Login */}
-              <Link
-                href="/login"
-                className="hidden sm:flex px-4 py-2 text-sm font-medium text-thera-muted hover:text-thera-text transition-colors"
-              >
-                Login
-              </Link>
-
-              {/* Get Started */}
-              <Link
-                href="/signup"
-                className="hidden sm:flex px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-thera-primary/25"
-              >
-                Get Started
-              </Link>
+              {/* Auth-aware links */}
+              {session ? (
+                <>
+                  {profile?.role === "admin" && (
+                    <Link
+                      href="/admin"
+                      className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-thera-muted hover:text-thera-text transition-colors"
+                    >
+                      <Shield className="w-4 h-4" /> Admin
+                    </Link>
+                  )}
+                  <Link
+                    href="/dashboard"
+                    className="hidden sm:flex items-center gap-1.5 px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-thera-primary/25"
+                  >
+                    <LayoutDashboard className="w-4 h-4" /> Dashboard
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="hidden sm:flex px-4 py-2 text-sm font-medium text-thera-muted hover:text-thera-text transition-colors"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="hidden sm:flex px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-thera-primary/25"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
 
               {/* Mobile Menu Button */}
               <button
@@ -192,20 +230,43 @@ export function Navbar() {
                 </motion.div>
               ))}
               <div className="pt-6 space-y-3">
-                <Link
-                  href="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center px-4 py-3 text-lg font-medium rounded-xl border border-thera-ink/10 hover:bg-thera-ink/5 transition-colors"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center px-4 py-3 text-lg font-semibold rounded-xl bg-gradient-to-r from-thera-primary to-thera-secondary"
-                >
-                  Get Started
-                </Link>
+                {session ? (
+                  <>
+                    {profile?.role === "admin" && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 px-4 py-3 text-lg font-medium rounded-xl border border-thera-ink/10 hover:bg-thera-ink/5 transition-colors"
+                      >
+                        <Shield className="w-5 h-5" /> Admin
+                      </Link>
+                    )}
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 px-4 py-3 text-lg font-semibold rounded-xl bg-gradient-to-r from-thera-primary to-thera-secondary"
+                    >
+                      <LayoutDashboard className="w-5 h-5" /> Dashboard
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center px-4 py-3 text-lg font-medium rounded-xl border border-thera-ink/10 hover:bg-thera-ink/5 transition-colors"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center px-4 py-3 text-lg font-semibold rounded-xl bg-gradient-to-r from-thera-primary to-thera-secondary"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
