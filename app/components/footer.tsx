@@ -15,15 +15,14 @@ const footerLinks = {
     { name: "Press", href: "#" },
   ],
   product: [
-    { name: "Features", href: "#features" },
+    { name: "Find Therapist", href: "/#therapists" },
+    { name: "Services", href: "/#services" },
     { name: "Pricing", href: "/pricing" },
-    { name: "Integrations", href: "#" },
   ],
   resources: [
-    { name: "Documentation", href: "/help" },
+    { name: "Resources", href: "/#resources" },
     { name: "Help Center", href: "/help" },
-    { name: "API Reference", href: "#" },
-    { name: "Status", href: "#" },
+    { name: "FAQ", href: "/#faq" },
   ],
   legal: [
     { name: "Privacy", href: "#" },
@@ -42,7 +41,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-white/5 bg-thera-bg">
+    <footer className="relative border-t border-thera-ink/5 bg-thera-bg">
       {/* Newsletter Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center mb-20">
@@ -58,7 +57,7 @@ export function Footer() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+              className="flex-1 px-5 py-4 bg-thera-ink/5 border border-thera-ink/10 rounded-xl text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
             />
             <button
               type="submit"
@@ -92,7 +91,7 @@ export function Footer() {
                 <a
                   key={social.name}
                   href={social.href}
-                  className="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-thera-muted hover:text-white"
+                  className="p-2.5 rounded-lg bg-thera-ink/5 hover:bg-thera-ink/10 transition-colors text-thera-muted hover:text-thera-text"
                   aria-label={social.name}
                 >
                   <social.icon className="w-4 h-4" />
@@ -107,7 +106,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-thera-muted hover:text-white transition-colors flex items-center gap-1 group">
+                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
                     {link.name}
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
@@ -121,7 +120,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-thera-muted hover:text-white transition-colors flex items-center gap-1 group">
+                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
                     {link.name}
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
@@ -135,7 +134,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-thera-muted hover:text-white transition-colors flex items-center gap-1 group">
+                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
                     {link.name}
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
@@ -149,7 +148,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-thera-muted hover:text-white transition-colors flex items-center gap-1 group">
+                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
                     {link.name}
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
@@ -160,7 +159,7 @@ export function Footer() {
         </div>
 
         {/* Contact Info */}
-        <div className="mt-16 pt-8 border-t border-white/5 grid md:grid-cols-3 gap-6">
+        <div className="mt-16 pt-8 border-t border-thera-ink/5 grid md:grid-cols-3 gap-6">
           <div className="flex items-center gap-3 text-sm text-thera-muted">
             <Mail className="w-4 h-4 text-thera-primary" />
             <span>support@christech.co.ke</span>
@@ -176,7 +175,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-8 pt-8 border-t border-thera-ink/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-thera-muted">
             &copy; {new Date().getFullYear()} TheraSpace. All rights reserved.
           </p>

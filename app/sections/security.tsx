@@ -132,7 +132,7 @@ export function SecuritySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-thera-primary/20 transition-all duration-300 hover:-translate-y-1"
+              className="group p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/20 transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -156,7 +156,7 @@ export function SecuritySection() {
           className="mt-16 flex flex-wrap justify-center gap-4"
         >
           {["GDPR Compliant", "Kenya DPA Ready", "ISO 27001", "SOC 2 Type II", "HIPAA Ready"].map((badge) => (
-            <div key={badge} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+            <div key={badge} className="flex items-center gap-2 px-4 py-2 rounded-full bg-thera-ink/5 border border-thera-ink/10">
               <CheckCircle2 className="w-4 h-4 text-thera-success" />
               <span className="text-sm font-medium">{badge}</span>
             </div>

@@ -17,7 +17,7 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen pt-20 pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-white transition-colors mb-12">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-thera-text transition-colors mb-12">
           <ArrowLeft className="w-4 h-4" />
           Back to home
         </Link>
@@ -34,13 +34,13 @@ export default function BlogPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post, i) => (
             <motion.article key={post.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group">
-              <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all h-full flex flex-col">
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${post.color} bg-clip-text text-transparent border border-white/10 w-fit mb-4`}>
+              <div className="p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-ink/10 transition-all h-full flex flex-col">
+                <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${post.color} bg-clip-text text-transparent border border-thera-ink/10 w-fit mb-4`}>
                   {post.category}
                 </span>
                 <h2 className="text-lg font-bold mb-3 group-hover:text-gradient transition-all line-clamp-2">{post.title}</h2>
                 <p className="text-sm text-thera-muted leading-relaxed mb-6 flex-1 line-clamp-3">{post.excerpt}</p>
-                <div className="flex items-center justify-between text-xs text-thera-muted pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between text-xs text-thera-muted pt-4 border-t border-thera-ink/5">
                   <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{post.readTime}</span>
                   <span>{post.date}</span>
                 </div>

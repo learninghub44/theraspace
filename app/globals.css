@@ -65,33 +65,33 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(100deg, #E7A339 0%, #D9834F 50%, #8FB08A 100%);
+    background-image: linear-gradient(100deg, #2B6E64 0%, #7FAE8C 100%);
   }
 
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-white/70 backdrop-blur-xl border border-thera-ink/10;
   }
 
   .glass-dark {
-    @apply bg-black/20 backdrop-blur-xl border border-white/5;
+    @apply bg-thera-ink/[0.04] backdrop-blur-xl border border-thera-ink/5;
   }
 
   .glow-primary {
-    box-shadow: 0 0 40px rgba(231, 163, 57, 0.25), 0 0 80px rgba(231, 163, 57, 0.08);
+    box-shadow: 0 8px 30px rgba(43, 110, 100, 0.14), 0 2px 8px rgba(43, 110, 100, 0.08);
   }
 
   .glow-accent {
-    box-shadow: 0 0 40px rgba(143, 176, 138, 0.25), 0 0 80px rgba(143, 176, 138, 0.08);
+    box-shadow: 0 8px 30px rgba(226, 137, 107, 0.16), 0 2px 8px rgba(226, 137, 107, 0.08);
   }
 
   .gradient-border {
     position: relative;
-    background: linear-gradient(100deg, #E7A339, #D9834F, #8FB08A);
+    background: linear-gradient(100deg, #2B6E64, #7FAE8C);
     padding: 1px;
   }
 
   .gradient-border-inner {
-    background: #17211B;
+    background: #FFFFFF;
     border-radius: inherit;
   }
 
@@ -121,8 +121,8 @@
     background-image:
       repeating-radial-gradient(
         circle at center,
-        rgba(231, 163, 57, 0.14) 0px,
-        rgba(231, 163, 57, 0.14) 1px,
+        rgba(43, 110, 100, 0.10) 0px,
+        rgba(43, 110, 100, 0.10) 1px,
         transparent 1px,
         transparent 64px
       );
@@ -132,8 +132,8 @@
     background-image:
       repeating-radial-gradient(
         circle at center,
-        rgba(143, 176, 138, 0.16) 0px,
-        rgba(143, 176, 138, 0.16) 1px,
+        rgba(226, 137, 107, 0.12) 0px,
+        rgba(226, 137, 107, 0.12) 1px,
         transparent 1px,
         transparent 64px
       );

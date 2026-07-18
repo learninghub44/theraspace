@@ -57,7 +57,7 @@ export function PricingSection() {
           transition={{ duration: 0.8 }}
           className="relative"
         >
-          <div className="relative p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-thera-card/80 to-thera-card/40 border border-white/10 backdrop-blur-sm overflow-hidden">
+          <div className="relative p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-thera-card/80 to-thera-card/40 border border-thera-ink/10 backdrop-blur-sm overflow-hidden">
             {/* Glow Effect */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-thera-primary/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-thera-secondary/10 rounded-full blur-3xl" />
@@ -82,7 +82,7 @@ export function PricingSection() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-white/10 hover:bg-white/5 transition-all duration-300"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300"
                   >
                     Book a Demo
                   </Link>

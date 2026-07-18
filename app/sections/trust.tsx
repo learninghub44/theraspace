@@ -86,7 +86,7 @@ export function TrustSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-thera-muted hover:text-white hover:border-white/20 transition-all cursor-default"
+                className="px-6 py-3 rounded-full bg-thera-ink/5 border border-thera-ink/10 text-sm font-medium text-thera-muted hover:text-thera-text hover:border-thera-ink/20 transition-all cursor-default"
               >
                 {item}
               </motion.div>
@@ -105,7 +105,7 @@ export function TrustSection() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="relative group"
             >
-              <div className="p-6 lg:p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-thera-primary/30 transition-all duration-500 hover:-translate-y-1">
+              <div className="p-6 lg:p-8 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/30 transition-all duration-500 hover:-translate-y-1">
                 <div className="w-3 h-3 rounded-xl bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <stat.icon className="w-6 h-6 text-thera-primary" />
                 </div>

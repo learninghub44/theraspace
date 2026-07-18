@@ -85,7 +85,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0E1712" />
+        <meta name="theme-color" content="#2B6E64" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

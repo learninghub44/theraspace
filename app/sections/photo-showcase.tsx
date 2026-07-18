@@ -50,7 +50,7 @@ export function PhotoShowcaseSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className={`relative rounded-2xl overflow-hidden border border-white/10 ${photo.span}`}
+              className={`relative rounded-2xl overflow-hidden border border-thera-ink/10 ${photo.span}`}
             >
               <img
                 src={photo.src}

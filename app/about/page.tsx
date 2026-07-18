@@ -15,7 +15,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen pt-20 pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-white transition-colors mb-12">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-thera-text transition-colors mb-12">
           <ArrowLeft className="w-4 h-4" />
           Back to home
         </Link>
@@ -31,7 +31,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-8 rounded-2xl bg-white/5 border border-white/5">
+            <div className="p-8 rounded-2xl bg-thera-ink/5 border border-thera-ink/5">
               <div className="w-12 h-12 rounded-xl bg-thera-primary/20 flex items-center justify-center mb-4">
                 <Target className="w-6 h-6 text-thera-primary" />
               </div>
@@ -40,7 +40,7 @@ export default function AboutPage() {
                 To empower every therapist and mental health professional with world-class technology that reduces administrative burden, enhances clinical outcomes, and makes quality mental healthcare more accessible across Africa.
               </p>
             </div>
-            <div className="p-8 rounded-2xl bg-white/5 border border-white/5">
+            <div className="p-8 rounded-2xl bg-thera-ink/5 border border-thera-ink/5">
               <div className="w-12 h-12 rounded-xl bg-thera-secondary/20 flex items-center justify-center mb-4">
                 <Eye className="w-6 h-6 text-thera-secondary" />
               </div>
@@ -51,7 +51,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-white/5 to-transparent border border-white/5">
+          <div className="p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-thera-ink/5 to-transparent border border-thera-ink/5">
             <h2 className="text-2xl font-bold mb-6">Our Story</h2>
             <div className="space-y-4 text-thera-muted leading-relaxed">
               <p>TheraSpace was born from a simple observation: therapists in Kenya and across Africa were spending more time on paperwork than on their clients. The available practice management tools were either too expensive, too complex, or not designed for the unique needs of mental health professionals.</p>
@@ -64,7 +64,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-center mb-12">Our Values</h2>
             <div className="grid sm:grid-cols-2 gap-6">
               {values.map((value, i) => (
-                <motion.div key={value.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-thera-primary/20 transition-all">
+                <motion.div key={value.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/20 transition-all">
                   <value.icon className="w-6 h-6 text-thera-primary mb-4" />
                   <h3 className="font-semibold mb-2">{value.title}</h3>
                   <p className="text-sm text-thera-muted">{value.description}</p>

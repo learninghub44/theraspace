@@ -73,10 +73,10 @@ export function BlogSection() {
               className="group"
             >
               <Link href="/blog" className="block">
-                <div className="relative p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 h-full flex flex-col">
+                <div className="relative p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-ink/10 transition-all duration-500 h-full flex flex-col">
                   {/* Category Badge */}
                   <div className="flex items-center gap-3 mb-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${post.color} bg-clip-text text-transparent border border-white/10`}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${post.color} bg-clip-text text-transparent border border-thera-ink/10`}>
                       {post.category}
                     </span>
                   </div>
@@ -92,7 +92,7 @@ export function BlogSection() {
                   </p>
 
                   {/* Meta */}
-                  <div className="flex items-center gap-4 text-xs text-thera-muted pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-4 text-xs text-thera-muted pt-4 border-t border-thera-ink/5">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {post.readTime}

@@ -90,7 +90,7 @@ export function TestimonialsSection() {
               {testimonials.map((testimonial, i) => (
                 <div key={i} className="w-full flex-shrink-0 px-4">
                   <div className="max-w-3xl mx-auto">
-                    <div className="relative p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-sm">
+                    <div className="relative p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-thera-ink/5 to-white/[0.02] border border-thera-ink/10 backdrop-blur-sm">
                       {/* Quote Icon */}
                       <Quote className="w-10 h-10 text-thera-primary/30 mb-6" />
 
@@ -128,7 +128,7 @@ export function TestimonialsSection() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prev}
-              className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              className="p-3 rounded-full bg-thera-ink/5 border border-thera-ink/10 hover:bg-thera-ink/10 transition-colors"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -141,7 +141,7 @@ export function TestimonialsSection() {
                   onClick={() => setActiveIndex(i)}
                   className={cn(
                     "w-2 h-2 rounded-full transition-all duration-300",
-                    i === activeIndex ? "w-8 bg-thera-primary" : "bg-white/20 hover:bg-white/40"
+                    i === activeIndex ? "w-8 bg-thera-primary" : "bg-thera-ink/20 hover:bg-thera-ink/40"
                   )}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
@@ -150,7 +150,7 @@ export function TestimonialsSection() {
 
             <button
               onClick={next}
-              className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              className="p-3 rounded-full bg-thera-ink/5 border border-thera-ink/10 hover:bg-thera-ink/10 transition-colors"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />

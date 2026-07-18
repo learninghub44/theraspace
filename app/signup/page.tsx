@@ -73,7 +73,7 @@ export default function SignupPage() {
           </div>
           <h1 className="text-2xl font-bold mb-4">Check your email</h1>
           <p className="text-thera-muted mb-6">
-            We&apos;ve sent a verification link to <span className="text-white">{email}</span>. Click the link to verify your account and get started.
+            We&apos;ve sent a verification link to <span className="text-thera-text">{email}</span>. Click the link to verify your account and get started.
           </p>
           <Link
             href="/login"
@@ -101,13 +101,13 @@ export default function SignupPage() {
       >
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-white transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-thera-text transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to home
         </Link>
 
-        <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div className="p-8 rounded-3xl bg-thera-ink/5 border border-thera-ink/10 backdrop-blur-sm">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-thera-primary to-thera-secondary mb-4">
               <Sparkles className="w-6 h-6 text-white" />
@@ -133,7 +133,7 @@ export default function SignupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                   required
                 />
               </div>
@@ -148,14 +148,14 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Min 8 characters"
-                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                   required
                   minLength={8}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-thera-text transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -171,13 +171,13 @@ export default function SignupPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm your password"
-                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-thera-text transition-colors"
                 >
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -192,7 +192,7 @@ export default function SignupPage() {
                 type="checkbox"
                 checked={acceptTerms}
                 onChange={(e) => setAcceptTerms(e.target.checked)}
-                className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-thera-primary focus:ring-thera-primary/20"
+                className="mt-0.5 w-4 h-4 rounded border-thera-ink/20 bg-thera-ink/5 text-thera-primary focus:ring-thera-primary/20"
                 required
               />
               <span className="text-sm text-thera-muted">
@@ -210,7 +210,7 @@ export default function SignupPage() {
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-5 h-5 border-2 border-thera-ink/30 border-t-white rounded-full animate-spin" />
                   Creating account...
                 </span>
               ) : (
@@ -220,9 +220,9 @@ export default function SignupPage() {
           </form>
 
           <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-white/10" />
+            <div className="flex-1 h-px bg-thera-ink/10" />
             <span className="text-xs text-thera-muted">or</span>
-            <div className="flex-1 h-px bg-white/10" />
+            <div className="flex-1 h-px bg-thera-ink/10" />
           </div>
 
           <p className="text-center text-sm text-thera-muted">

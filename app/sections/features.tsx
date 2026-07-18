@@ -149,7 +149,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.05 }}
       className={cn(
-        "group relative p-6 lg:p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-1 overflow-hidden",
+        "group relative p-6 lg:p-8 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-ink/10 transition-all duration-500 hover:-translate-y-1 overflow-hidden",
         isEven ? "lg:col-span-1" : "lg:col-span-1"
       )}
     >

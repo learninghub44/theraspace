@@ -89,7 +89,7 @@ export function HowItWorksSection() {
                 >
                   {/* Content */}
                   <div className={`pl-20 sm:pl-0 ${isEven ? "lg:pr-16 lg:text-right" : "lg:col-start-2 lg:pl-16"}`}>
-                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs mb-4 ${
+                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-thera-ink/5 border border-thera-ink/10 text-xs mb-4 ${
                       isEven ? "lg:flex-row-reverse" : ""
                     }`}>
                       <span className="text-thera-primary font-semibold">Step {index + 1}</span>

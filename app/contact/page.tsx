@@ -26,7 +26,7 @@ export default function ContactPage() {
         {/* Back Link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-white transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-thera-text transition-colors mb-12"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to home
@@ -47,7 +47,7 @@ export default function ContactPage() {
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
                 <div className="w-10 h-10 rounded-lg bg-thera-primary/20 flex items-center justify-center flex-shrink-0">
                   <Mail className="w-5 h-5 text-thera-primary" />
                 </div>
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
                 <div className="w-10 h-10 rounded-lg bg-thera-secondary/20 flex items-center justify-center flex-shrink-0">
                   <Phone className="w-5 h-5 text-thera-secondary" />
                 </div>
@@ -67,7 +67,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
                 <div className="w-10 h-10 rounded-lg bg-thera-accent/20 flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5 text-thera-accent" />
                 </div>
@@ -79,7 +79,7 @@ export default function ContactPage() {
             </div>
 
             {/* Map Placeholder */}
-            <div className="mt-8 p-6 rounded-2xl bg-white/5 border border-white/5 h-64 flex items-center justify-center">
+            <div className="mt-8 p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 h-64 flex items-center justify-center">
               <div className="text-center">
                 <MapPin className="w-8 h-8 text-thera-muted mx-auto mb-2" />
                 <p className="text-sm text-thera-muted">Interactive Map</p>
@@ -95,7 +95,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
           >
             {isSubmitted ? (
-              <div className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center">
+              <div className="p-8 rounded-3xl bg-thera-ink/5 border border-thera-ink/10 text-center">
                 <div className="w-16 h-16 rounded-full bg-thera-success/20 flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="w-8 h-8 text-thera-success" />
                 </div>
@@ -105,13 +105,13 @@ export default function ContactPage() {
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
-                  className="px-6 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors"
+                  className="px-6 py-3 bg-thera-ink/5 border border-thera-ink/10 rounded-xl hover:bg-thera-ink/10 transition-colors"
                 >
                   Send another message
                 </button>
               </div>
             ) : (
-              <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="p-8 rounded-3xl bg-thera-ink/5 border border-thera-ink/10 backdrop-blur-sm">
                 <h2 className="text-xl font-bold mb-6">Send us a message</h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
@@ -122,7 +122,7 @@ export default function ContactPage() {
                         <input
                           type="text"
                           placeholder="Your name"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                           required
                         />
                       </div>
@@ -134,7 +134,7 @@ export default function ContactPage() {
                         <input
                           type="email"
                           placeholder="you@example.com"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                           required
                         />
                       </div>
@@ -149,7 +149,7 @@ export default function ContactPage() {
                         <input
                           type="text"
                           placeholder="Your clinic or practice"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                         />
                       </div>
                     </div>
@@ -160,7 +160,7 @@ export default function ContactPage() {
                         <input
                           type="tel"
                           placeholder="+254 701 059 192"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                         />
                       </div>
                     </div>
@@ -173,7 +173,7 @@ export default function ContactPage() {
                       <textarea
                         rows={5}
                         placeholder="How can we help you?"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all resize-none"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all resize-none"
                         required
                       />
                     </div>
@@ -186,7 +186,7 @@ export default function ContactPage() {
                   >
                     {isLoading ? (
                       <>
-                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span className="w-5 h-5 border-2 border-thera-ink/30 border-t-white rounded-full animate-spin" />
                         Sending...
                       </>
                     ) : (

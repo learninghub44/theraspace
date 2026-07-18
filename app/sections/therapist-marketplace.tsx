@@ -91,7 +91,7 @@ function TherapistCard({ therapist, index }: { therapist: TherapistCardData; ind
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
-      className="group rounded-2xl bg-white/5 border border-white/5 hover:border-thera-primary/30 overflow-hidden transition-all duration-500 hover:-translate-y-1"
+      className="group rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/30 overflow-hidden transition-all duration-500 hover:-translate-y-1"
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -101,7 +101,7 @@ function TherapistCard({ therapist, index }: { therapist: TherapistCardData; ind
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
         {therapist.verified && (
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-thera-bg/80 backdrop-blur-sm border border-white/10 text-xs font-medium text-thera-accent">
+          <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-thera-bg/80 backdrop-blur-sm border border-thera-ink/10 text-xs font-medium text-thera-accent">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Verified
           </div>
@@ -128,7 +128,7 @@ function TherapistCard({ therapist, index }: { therapist: TherapistCardData; ind
 
         <div className="flex items-center justify-between">
           <span className="text-sm text-thera-muted">
-            From <span className="text-white font-semibold">KES {therapist.priceFrom.toLocaleString()}</span>/session
+            From <span className="text-thera-text font-semibold">KES {therapist.priceFrom.toLocaleString()}</span>/session
           </span>
           <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-thera-primary to-thera-secondary text-sm font-medium hover:opacity-90 transition-opacity">
             Book
@@ -141,7 +141,7 @@ function TherapistCard({ therapist, index }: { therapist: TherapistCardData; ind
 
 export function TherapistMarketplaceSection() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="therapists" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-thera-bg via-thera-card/30 to-thera-bg" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -174,7 +174,7 @@ export function TherapistMarketplaceSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center mt-12"
         >
-          <button className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 hover:border-white/20 transition-all">
+          <button className="px-6 py-3 rounded-full bg-thera-ink/5 border border-thera-ink/10 text-sm font-medium hover:bg-thera-ink/10 hover:border-thera-ink/20 transition-all">
             View all therapists
           </button>
         </motion.div>

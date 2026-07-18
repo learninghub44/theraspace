@@ -34,13 +34,13 @@ function DashboardMock({ type }: { type: string }) {
                 { label: "Pending Notes", value: "3", color: "thera-warning" },
                 { label: "Revenue (MTD)", value: "KES 84K", color: "thera-success" },
               ].map((stat) => (
-                <div key={stat.label} className="p-4 rounded-xl bg-white/5 border border-white/5">
+                <div key={stat.label} className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
                   <p className="text-xs text-thera-muted mb-1">{stat.label}</p>
                   <p className={`text-xl font-bold text-${stat.color}`}>{stat.value}</p>
                 </div>
               ))}
             </div>
-            <div className="col-span-2 p-4 rounded-xl bg-white/5 border border-white/5">
+            <div className="col-span-2 p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
               <p className="text-sm font-medium mb-4">Weekly Overview</p>
               <div className="h-32 flex items-end gap-2">
                 {[30, 45, 35, 60, 50, 70, 55].map((h, i) => (
@@ -48,7 +48,7 @@ function DashboardMock({ type }: { type: string }) {
                 ))}
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+            <div className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
               <p className="text-sm font-medium mb-4">Upcoming</p>
               <div className="space-y-3">
                 {["2:00 PM - Sarah M.", "3:30 PM - James K.", "5:00 PM - Amina W."].map((item) => (
@@ -72,7 +72,7 @@ function DashboardMock({ type }: { type: string }) {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+              <div className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
                 <p className="text-xs text-thera-muted mb-2">Mood Trend</p>
                 <div className="flex items-end gap-1 h-16">
                   {[3, 4, 2, 5, 4, 3, 5].map((h, i) => (
@@ -80,13 +80,13 @@ function DashboardMock({ type }: { type: string }) {
                   ))}
                 </div>
               </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+              <div className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
                 <p className="text-xs text-thera-muted mb-2">Next Session</p>
                 <p className="text-lg font-bold">Today</p>
                 <p className="text-xs text-thera-muted">2:00 PM</p>
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+            <div className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
               <p className="text-xs text-thera-muted mb-2">Recent Journal Entry</p>
               <p className="text-sm text-thera-muted">"Feeling more confident after last session. The breathing exercises really helped during the presentation..."</p>
             </div>
@@ -101,20 +101,20 @@ function DashboardMock({ type }: { type: string }) {
                 { label: "Active Clients", value: "248" },
                 { label: "Monthly Revenue", value: "KES 1.2M" },
               ].map((stat) => (
-                <div key={stat.label} className="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+                <div key={stat.label} className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5 text-center">
                   <p className="text-2xl font-bold text-thera-primary">{stat.value}</p>
                   <p className="text-xs text-thera-muted">{stat.label}</p>
                 </div>
               ))}
             </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+            <div className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
               <p className="text-sm font-medium mb-4">Therapist Performance</p>
               <div className="space-y-3">
                 {["Dr. Kimani - 98% attendance", "Dr. Ochieng - 95% attendance", "Dr. Wanjiku - 92% attendance"].map((item, i) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-thera-primary/30 to-thera-secondary/30" />
                     <div className="flex-1">
-                      <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                      <div className="h-2 rounded-full bg-thera-ink/10 overflow-hidden">
                         <div className="h-full rounded-full bg-gradient-to-r from-thera-primary to-thera-secondary" style={{ width: `${98 - i * 3}%` }} />
                       </div>
                     </div>
@@ -136,7 +136,7 @@ function DashboardMock({ type }: { type: string }) {
                 const hasEvent = [5, 8, 12, 15, 19, 22, 26].includes(i)
                 return (
                   <div key={i} className={`aspect-square rounded-lg flex items-center justify-center text-xs relative ${
-                    i === 15 ? "bg-thera-primary/20 text-thera-primary font-bold" : "bg-white/5 text-thera-muted"
+                    i === 15 ? "bg-thera-primary/20 text-thera-primary font-bold" : "bg-thera-ink/5 text-thera-muted"
                   }`}>
                     {i + 1}
                     {hasEvent && <div className="absolute bottom-1 w-1 h-1 rounded-full bg-thera-primary" />}
@@ -147,7 +147,7 @@ function DashboardMock({ type }: { type: string }) {
             <div className="space-y-2">
               <p className="text-sm font-medium">Today's Schedule</p>
               {["9:00 AM - Initial Consultation", "11:00 AM - Follow-up Session", "2:00 PM - Group Therapy"].map((item) => (
-                <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-white/5 text-xs">
+                <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-thera-ink/5 text-xs">
                   <div className="w-2 h-2 rounded-full bg-thera-primary" />
                   {item}
                 </div>
@@ -165,9 +165,9 @@ function DashboardMock({ type }: { type: string }) {
               </div>
               <p className="text-sm text-thera-muted">How can I help you today?</p>
             </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+            <div className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
               <p className="text-sm mb-2">Generate SOAP note for Session #1429</p>
-              <div className="p-3 rounded-lg bg-white/5 text-xs text-thera-muted space-y-1">
+              <div className="p-3 rounded-lg bg-thera-ink/5 text-xs text-thera-muted space-y-1">
                 <p><span className="text-thera-primary">S:</span> Client reports improved sleep...</p>
                 <p><span className="text-thera-primary">O:</span> Appears relaxed, maintains eye contact...</p>
                 <p><span className="text-thera-primary">A:</span> Anxiety symptoms reduced by 40%...</p>
@@ -186,15 +186,15 @@ function DashboardMock({ type }: { type: string }) {
   }
 
   return (
-    <div className="rounded-2xl overflow-hidden border border-white/10 bg-thera-card/80 backdrop-blur-sm">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/5">
+    <div className="rounded-2xl overflow-hidden border border-thera-ink/10 bg-thera-card/80 backdrop-blur-sm">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-thera-ink/5 bg-thera-ink/5">
         <div className="flex gap-1.5">
           <div className="w-3 h-3 rounded-full bg-thera-danger/80" />
           <div className="w-3 h-3 rounded-full bg-thera-warning/80" />
           <div className="w-3 h-3 rounded-full bg-thera-success/80" />
         </div>
         <div className="flex-1 mx-4">
-          <div className="bg-white/5 rounded-md px-3 py-1 text-xs text-thera-muted text-center capitalize">
+          <div className="bg-thera-ink/5 rounded-md px-3 py-1 text-xs text-thera-muted text-center capitalize">
             {type} Dashboard
           </div>
         </div>
@@ -244,7 +244,7 @@ export function PlatformShowcaseSection() {
                   "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300",
                   activeTab === tab.id
                     ? "bg-thera-primary/20 text-thera-primary border border-thera-primary/30"
-                    : "bg-white/5 text-thera-muted border border-white/5 hover:bg-white/10 hover:text-white"
+                    : "bg-thera-ink/5 text-thera-muted border border-thera-ink/5 hover:bg-thera-ink/10 hover:text-thera-text"
                 )}
               >
                 <tab.icon className="w-4 h-4" />

@@ -1,144 +1,169 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
 import {
-  Sparkles,
-  Users,
   Calendar,
-  FileText,
-  LogOut,
-  Loader2,
+  Clock,
+  Heart,
+  MessageSquare,
+  Video,
+  History,
+  BookOpen,
+  Smile,
+  NotebookPen,
+  Target,
+  CreditCard,
+  Bell,
+  User,
 } from "lucide-react"
-import { supabase } from "@/app/lib/supabase"
-import type { Session } from "@supabase/supabase-js"
+import { DashboardShell } from "@/app/components/dashboard-shell"
 
-export default function DashboardPage() {
-  const [session, setSession] = useState<Session | null>(null)
-  const [status, setStatus] = useState<"checking" | "ready" | "signed-out">("checking")
-  const [signingOut, setSigningOut] = useState(false)
+// Sample data — this page is a UI scaffold. Real appointments, favorites,
+// and history will need a bookings/favorites schema wired to Supabase.
+const upcomingAppointments = [
+  { therapist: "Dr. Amina Njoroge", date: "Mon, 21 Jul", time: "10:00 AM", mode: "Video" },
+  { therapist: "David Otieno", date: "Fri, 25 Jul", time: "2:30 PM", mode: "In-person" },
+]
 
-  useEffect(() => {
-    let active = true
+const favoriteTherapists = [
+  { name: "Dr. Amina Njoroge", specialty: "Anxiety & Stress" },
+  { name: "David Otieno", specialty: "Couples & Family" },
+]
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (!active) return
-      if (data.session) {
-        setSession(data.session)
-        setStatus("ready")
-      } else {
-        setStatus("signed-out")
-      }
-    })
+const moods = ["😔", "😕", "😐", "🙂", "😄"]
 
-    const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
-      if (!active) return
-      if (event === "SIGNED_OUT" || !newSession) {
-        setSession(null)
-        setStatus("signed-out")
-      } else {
-        setSession(newSession)
-        setStatus("ready")
-      }
-    })
-
-    return () => {
-      active = false
-      listener.subscription.unsubscribe()
-    }
-  }, [])
-
-  const handleSignOut = async () => {
-    setSigningOut(true)
-    await supabase.auth.signOut()
-    setSigningOut(false)
-    window.location.href = "/login"
-  }
-
-  if (status === "checking") {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 py-20">
-        <Loader2 className="w-8 h-8 text-thera-muted animate-spin" />
-        <p className="text-thera-muted text-sm">Loading your dashboard...</p>
-      </div>
-    )
-  }
-
-  if (status === "signed-out") {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-20">
-        <div className="text-center max-w-md">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-thera-primary to-thera-secondary mb-6">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold mb-3">You&apos;re not signed in</h1>
-          <p className="text-thera-muted mb-6">Sign in to view your dashboard.</p>
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl font-semibold"
-          >
-            Go to Login
-          </Link>
-        </div>
-      </div>
-    )
-  }
-
-  const email = session?.user?.email ?? ""
-
+export default function ClientDashboardPage() {
   return (
-    <div className="min-h-screen px-4 py-10 sm:py-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-10">
-          <div className="flex items-center gap-3">
-            <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-thera-primary to-thera-secondary">
-              <Sparkles className="w-5 h-5 text-white" />
+    <DashboardShell title="Your space" subtitle="Welcome back">
+      {() => (
+        <div className="space-y-6">
+          {/* Top row: upcoming + mood */}
+          <div className="grid lg:grid-cols-3 gap-5">
+            <div className="lg:col-span-2 p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <Calendar className="w-5 h-5 text-thera-primary" />
+                <h2 className="font-semibold">Upcoming appointments</h2>
+              </div>
+              <div className="space-y-3">
+                {upcomingAppointments.map((a) => (
+                  <div key={a.therapist + a.date} className="flex items-center justify-between p-4 rounded-xl bg-thera-ink/[0.03] border border-thera-ink/5">
+                    <div>
+                      <p className="font-medium text-sm">{a.therapist}</p>
+                      <p className="text-xs text-thera-muted flex items-center gap-1 mt-1">
+                        <Clock className="w-3 h-3" /> {a.date} · {a.time} · {a.mode}
+                      </p>
+                    </div>
+                    <button className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-thera-primary text-white text-xs font-medium hover:bg-thera-primary/90 transition-colors">
+                      <Video className="w-3.5 h-3.5" /> Join
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-thera-muted">Welcome back</p>
-              <p className="font-semibold">{email}</p>
+
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <Smile className="w-5 h-5 text-thera-accent" />
+                <h2 className="font-semibold">How are you today?</h2>
+              </div>
+              <div className="flex justify-between">
+                {moods.map((m) => (
+                  <button
+                    key={m}
+                    className="text-2xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-thera-ink/5 transition-colors"
+                  >
+                    {m}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-thera-muted mt-4">Your mood log helps track patterns over time.</p>
             </div>
           </div>
-          <button
-            onClick={handleSignOut}
-            disabled={signingOut}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 transition-colors disabled:opacity-50"
-          >
-            {signingOut ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <LogOut className="w-4 h-4" />
-            )}
-            Sign out
-          </button>
-        </div>
 
-        <div className="grid sm:grid-cols-3 gap-5 mb-10">
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <Users className="w-5 h-5 text-thera-primary mb-3" />
-            <p className="text-2xl font-bold">0</p>
-            <p className="text-sm text-thera-muted">Clients</p>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <Calendar className="w-5 h-5 text-thera-accent mb-3" />
-            <p className="text-2xl font-bold">0</p>
-            <p className="text-sm text-thera-muted">Appointments</p>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <FileText className="w-5 h-5 text-thera-secondary mb-3" />
-            <p className="text-2xl font-bold">0</p>
-            <p className="text-sm text-thera-muted">AI notes</p>
-          </div>
-        </div>
+          {/* Middle row */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <Heart className="w-5 h-5 text-thera-danger" />
+                <h2 className="font-semibold text-sm">Favorite therapists</h2>
+              </div>
+              <div className="space-y-2">
+                {favoriteTherapists.map((t) => (
+                  <div key={t.name} className="text-sm">
+                    <p className="font-medium">{t.name}</p>
+                    <p className="text-xs text-thera-muted">{t.specialty}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-        <div className="p-8 rounded-2xl bg-white/5 border border-white/10 text-center">
-          <h2 className="text-xl font-semibold mb-2">Your practice dashboard is set up</h2>
-          <p className="text-thera-muted max-w-lg mx-auto">
-            You&apos;re signed in and this account is live. Client records, scheduling, and AI
-            notes will appear here as they&apos;re added to your practice.
-          </p>
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <MessageSquare className="w-5 h-5 text-thera-primary" />
+                <h2 className="font-semibold text-sm">Messages</h2>
+              </div>
+              <p className="text-sm text-thera-muted">No new messages yet.</p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <History className="w-5 h-5 text-thera-secondary" />
+                <h2 className="font-semibold text-sm">Session history</h2>
+              </div>
+              <p className="text-sm text-thera-muted">Past sessions will appear here after your first booking.</p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <NotebookPen className="w-5 h-5 text-thera-accent" />
+                <h2 className="font-semibold text-sm">Journal</h2>
+              </div>
+              <p className="text-sm text-thera-muted mb-3">A private space for your thoughts between sessions.</p>
+              <button className="text-xs font-medium text-thera-primary hover:underline">Write an entry</button>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <Target className="w-5 h-5 text-thera-success" />
+                <h2 className="font-semibold text-sm">Goals</h2>
+              </div>
+              <p className="text-sm text-thera-muted">No goals set yet — add one with your therapist.</p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <BookOpen className="w-5 h-5 text-thera-warning" />
+                <h2 className="font-semibold text-sm">Resources</h2>
+              </div>
+              <p className="text-sm text-thera-muted">Curated articles and exercises based on your sessions.</p>
+            </div>
+          </div>
+
+          {/* Bottom row */}
+          <div className="grid sm:grid-cols-3 gap-5">
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <CreditCard className="w-5 h-5 text-thera-muted" />
+                <h2 className="font-semibold text-sm">Payment history</h2>
+              </div>
+              <p className="text-sm text-thera-muted">No payments yet.</p>
+            </div>
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <Bell className="w-5 h-5 text-thera-muted" />
+                <h2 className="font-semibold text-sm">Notifications</h2>
+              </div>
+              <p className="text-sm text-thera-muted">You&apos;re all caught up.</p>
+            </div>
+            <div className="p-6 rounded-2xl bg-thera-card border border-thera-ink/10 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <User className="w-5 h-5 text-thera-muted" />
+                <h2 className="font-semibold text-sm">Profile</h2>
+              </div>
+              <p className="text-sm text-thera-muted">Keep your details up to date.</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </DashboardShell>
   )
 }

@@ -56,7 +56,7 @@ export default function AuthCallbackPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 py-20">
-      <span className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      <span className="w-8 h-8 border-2 border-thera-ink/20 border-t-white rounded-full animate-spin" />
       <p className="text-thera-muted text-sm">Verifying your account...</p>
     </div>
   )

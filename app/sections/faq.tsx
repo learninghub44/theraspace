@@ -97,7 +97,7 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.03 }}
-      className="border-b border-white/5 last:border-0"
+      className="border-b border-thera-ink/5 last:border-0"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -107,7 +107,7 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
           {faq.question}
         </span>
         <div className={cn(
-          "w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 transition-all duration-300",
+          "w-8 h-8 rounded-lg bg-thera-ink/5 flex items-center justify-center flex-shrink-0 transition-all duration-300",
           isOpen && "bg-thera-primary/20"
         )}>
           <ChevronDown className={cn(
@@ -161,7 +161,7 @@ export function FAQSection() {
         </motion.div>
 
         {/* FAQ List */}
-        <div className="rounded-2xl bg-white/5 border border-white/5 p-6 lg:p-8">
+        <div className="rounded-2xl bg-thera-ink/5 border border-thera-ink/5 p-6 lg:p-8">
           {faqs.map((faq, i) => (
             <FAQItem key={i} faq={faq} index={i} />
           ))}

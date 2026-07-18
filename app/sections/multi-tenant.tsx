@@ -23,7 +23,7 @@ export function MultiTenantSection() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative p-8 rounded-3xl bg-gradient-to-br from-thera-card/80 to-thera-card/40 border border-white/10 backdrop-blur-sm">
+            <div className="relative p-8 rounded-3xl bg-gradient-to-br from-thera-card/80 to-thera-card/40 border border-thera-ink/10 backdrop-blur-sm">
               {/* Central Hub */}
               <div className="flex items-center justify-center mb-8">
                 <div className="relative">
@@ -43,7 +43,7 @@ export function MultiTenantSection() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className="relative p-4 rounded-xl bg-white/5 border border-white/10 text-center group hover:border-thera-primary/30 transition-all"
+                    className="relative p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-center group hover:border-thera-primary/30 transition-all"
                   >
                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 flex items-center justify-center mx-auto mb-2">
                       <Users className="w-4 h-4 text-thera-primary" />
@@ -58,8 +58,8 @@ export function MultiTenantSection() {
               <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" style={{ zIndex: -1 }}>
                 <defs>
                   <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#E7A339" />
-                    <stop offset="100%" stopColor="#2F5C4B" />
+                    <stop offset="0%" stopColor="#2B6E64" />
+                    <stop offset="100%" stopColor="#7FAE8C" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -99,7 +99,7 @@ export function MultiTenantSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-thera-primary/20 transition-all"
+                  className="p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/20 transition-all"
                 >
                   <feature.icon className="w-5 h-5 text-thera-primary mb-2" />
                   <p className="text-sm font-semibold mb-1">{feature.label}</p>

@@ -18,7 +18,7 @@ export default function HelpPage() {
   return (
     <div className="min-h-screen pt-20 pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-white transition-colors mb-12">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-thera-text transition-colors mb-12">
           <ArrowLeft className="w-4 h-4" />
           Back to home
         </Link>
@@ -38,14 +38,14 @@ export default function HelpPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for help articles..."
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
             />
           </div>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-6 mb-16">
           {categories.map((cat, i) => (
-            <motion.div key={cat.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-thera-primary/20 transition-all">
+            <motion.div key={cat.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/20 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-thera-primary/20 flex items-center justify-center">
                   <cat.icon className="w-5 h-5 text-thera-primary" />
@@ -66,7 +66,7 @@ export default function HelpPage() {
           ))}
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-8 rounded-3xl bg-gradient-to-br from-thera-primary/10 to-thera-secondary/10 border border-white/5 text-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-8 rounded-3xl bg-gradient-to-br from-thera-primary/10 to-thera-secondary/10 border border-thera-ink/5 text-center">
           <h2 className="text-2xl font-bold mb-4">Still need help?</h2>
           <p className="text-thera-muted mb-6">Our support team is ready to assist you.</p>
           <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-thera-primary to-thera-secondary rounded-xl font-semibold hover:shadow-lg hover:shadow-thera-primary/25 transition-all">

@@ -51,7 +51,7 @@ export default function PricingPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-white transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-sm text-thera-muted hover:text-thera-text transition-colors mb-12"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to home
@@ -83,13 +83,13 @@ export default function PricingPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="flex justify-center mb-12"
         >
-          <div className="inline-flex items-center gap-4 p-1.5 rounded-2xl bg-white/5 border border-white/10">
+          <div className="inline-flex items-center gap-4 p-1.5 rounded-2xl bg-thera-ink/5 border border-thera-ink/10">
             <button
               onClick={() => setBillingCycle("monthly")}
               className={`px-6 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 billingCycle === "monthly"
                   ? "bg-thera-primary/20 text-thera-primary"
-                  : "text-thera-muted hover:text-white"
+                  : "text-thera-muted hover:text-thera-text"
               }`}
             >
               Monthly
@@ -99,7 +99,7 @@ export default function PricingPage() {
               className={`px-6 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${
                 billingCycle === "annual"
                   ? "bg-thera-primary/20 text-thera-primary"
-                  : "text-thera-muted hover:text-white"
+                  : "text-thera-muted hover:text-thera-text"
               }`}
             >
               Annual
@@ -117,7 +117,7 @@ export default function PricingPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative mb-16"
         >
-          <div className="p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-thera-card/80 to-thera-card/40 border border-white/10 backdrop-blur-sm">
+          <div className="p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-thera-card/80 to-thera-card/40 border border-thera-ink/10 backdrop-blur-sm">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <div className="mb-6">
@@ -146,7 +146,7 @@ export default function PricingPage() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold border border-white/10 hover:bg-white/5 transition-all"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold border border-thera-ink/10 hover:bg-thera-ink/5 transition-all"
                   >
                     Book a Demo
                   </Link>
@@ -181,7 +181,7 @@ export default function PricingPage() {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/5">
+              <div key={i} className="p-6 rounded-2xl bg-thera-ink/5 border border-thera-ink/5">
                 <h3 className="font-semibold mb-2">{faq.q}</h3>
                 <p className="text-sm text-thera-muted">{faq.a}</p>
               </div>

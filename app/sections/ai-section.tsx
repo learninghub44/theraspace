@@ -67,9 +67,9 @@ function AIChatMockup() {
       transition={{ duration: 0.8 }}
       className="relative"
     >
-      <div className="rounded-2xl overflow-hidden border border-white/10 bg-thera-card/80 backdrop-blur-sm">
+      <div className="rounded-2xl overflow-hidden border border-thera-ink/10 bg-thera-card/80 backdrop-blur-sm">
         {/* Chat Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5 bg-white/5">
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-thera-ink/5 bg-thera-ink/5">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-thera-primary to-thera-secondary flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
@@ -96,7 +96,7 @@ function AIChatMockup() {
               <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
                 msg.type === "user" 
                   ? "bg-thera-primary/20 rounded-br-md" 
-                  : "bg-white/5 rounded-bl-md border border-white/5"
+                  : "bg-thera-ink/5 rounded-bl-md border border-thera-ink/5"
               }`}>
                 {msg.type === "ai" && (
                   <div className="flex items-center gap-2 mb-2">
@@ -106,14 +106,14 @@ function AIChatMockup() {
                 )}
                 <div className="whitespace-pre-line text-thera-muted">{msg.text}</div>
                 {msg.type === "ai" && (
-                  <div className="flex gap-2 mt-3 pt-3 border-t border-white/5">
+                  <div className="flex gap-2 mt-3 pt-3 border-t border-thera-ink/5">
                     <button className="text-xs px-3 py-1.5 rounded-lg bg-thera-primary/20 text-thera-primary hover:bg-thera-primary/30 transition-colors">
                       Copy Note
                     </button>
-                    <button className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-thera-muted hover:bg-white/10 transition-colors">
+                    <button className="text-xs px-3 py-1.5 rounded-lg bg-thera-ink/5 text-thera-muted hover:bg-thera-ink/10 transition-colors">
                       Edit
                     </button>
-                    <button className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-thera-muted hover:bg-white/10 transition-colors">
+                    <button className="text-xs px-3 py-1.5 rounded-lg bg-thera-ink/5 text-thera-muted hover:bg-thera-ink/10 transition-colors">
                       Regenerate
                     </button>
                   </div>
@@ -124,8 +124,8 @@ function AIChatMockup() {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 border-t border-white/5">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/5">
+        <div className="p-4 border-t border-thera-ink/5">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/5">
             <input 
               type="text" 
               placeholder="Ask the AI assistant..." 
@@ -186,7 +186,7 @@ export function AISection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="group flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-thera-primary/30 transition-all duration-300 hover:-translate-x-1"
+                className="group flex items-start gap-4 p-4 rounded-xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-primary/30 transition-all duration-300 hover:-translate-x-1"
               >
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-thera-primary/20 to-thera-secondary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                   <cap.icon className="w-5 h-5 text-thera-primary" />
@@ -211,7 +211,7 @@ export function AISection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-20 p-8 rounded-2xl bg-gradient-to-r from-thera-primary/5 via-thera-secondary/5 to-thera-accent/5 border border-white/5"
+          className="mt-20 p-8 rounded-2xl bg-gradient-to-r from-thera-primary/5 via-thera-secondary/5 to-thera-accent/5 border border-thera-ink/5"
         >
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div>
@@ -220,7 +220,7 @@ export function AISection() {
             </div>
             <div className="flex flex-wrap gap-4">
               {ethicalBoundaries.map((item, i) => (
-                <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5">
+                <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-thera-ink/5 border border-thera-ink/5">
                   <item.icon className={`w-4 h-4 ${item.color}`} />
                   <span className="text-sm">{item.text}</span>
                 </div>

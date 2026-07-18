@@ -73,7 +73,7 @@ export default function ResetPasswordPage() {
   if (linkStatus === "checking") {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 py-20">
-        <span className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+        <span className="w-8 h-8 border-2 border-thera-ink/20 border-t-white rounded-full animate-spin" />
       </div>
     )
   }
@@ -141,7 +141,7 @@ export default function ResetPasswordPage() {
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md"
       >
-        <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div className="p-8 rounded-3xl bg-thera-ink/5 border border-thera-ink/10 backdrop-blur-sm">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-thera-primary to-thera-secondary mb-4">
               <Sparkles className="w-6 h-6 text-white" />
@@ -167,14 +167,14 @@ export default function ResetPasswordPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Min 8 characters"
-                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                   required
                   minLength={8}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-thera-text transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -190,13 +190,13 @@ export default function ResetPasswordPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm your password"
-                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-thera-ink/5 border border-thera-ink/10 text-thera-text placeholder:text-thera-muted focus:outline-none focus:border-thera-primary/50 focus:ring-2 focus:ring-thera-primary/20 transition-all"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-thera-muted hover:text-thera-text transition-colors"
                 >
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -213,7 +213,7 @@ export default function ResetPasswordPage() {
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-5 h-5 border-2 border-thera-ink/30 border-t-white rounded-full animate-spin" />
                   Updating...
                 </span>
               ) : (

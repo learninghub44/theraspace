@@ -92,7 +92,7 @@ export function BenefitsSection() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="group relative"
             >
-              <div className="relative p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 h-full">
+              <div className="relative p-8 rounded-2xl bg-thera-ink/5 border border-thera-ink/5 hover:border-thera-ink/10 transition-all duration-500 h-full">
                 {/* Gradient Background on Hover */}
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${benefit.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
 
@@ -112,7 +112,7 @@ export function BenefitsSection() {
                 </p>
 
                 {/* Stat */}
-                <div className="relative flex items-baseline gap-2 pt-4 border-t border-white/5">
+                <div className="relative flex items-baseline gap-2 pt-4 border-t border-thera-ink/5">
                   <span className={`text-2xl font-bold bg-gradient-to-r ${benefit.color} bg-clip-text text-transparent`}>
                     {benefit.stat}
                   </span>

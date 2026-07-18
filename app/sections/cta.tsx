@@ -10,7 +10,7 @@ export function CTASection() {
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-r from-thera-primary/10 via-thera-secondary/10 to-thera-accent/10 rounded-full blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#0E1712_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#F7F7F2_70%)]" />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -48,7 +48,7 @@ export function CTASection() {
             </Link>
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-white/10 hover:bg-white/5 transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-lg border border-thera-ink/10 hover:bg-thera-ink/5 transition-all duration-300 hover:-translate-y-0.5"
             >
               <Play className="w-5 h-5" />
               Book a Demo
