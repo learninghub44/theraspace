@@ -1,5 +1,6 @@
 import { HeroSection } from "@/app/sections/hero"
 import { AboutSection } from "@/app/sections/about-section"
+import { ServicesSection } from "@/app/sections/services-editorial"
 import { CategoriesSection } from "@/app/sections/categories"
 import { TherapistMarketplaceSection } from "@/app/sections/therapist-marketplace"
 import { BenefitsSection } from "@/app/sections/benefits"
@@ -12,6 +13,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <AboutSection />
+      <ServicesSection />
       <CategoriesSection />
       <TherapistMarketplaceSection />
       <BenefitsSection />
