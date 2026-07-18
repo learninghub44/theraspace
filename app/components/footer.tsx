@@ -8,27 +8,19 @@ import {
 } from "lucide-react"
 
 const footerLinks = {
+  marketplace: [
+    { name: "Find Therapist", href: "/#therapists" },
+    { name: "List Yourself", href: "/signup" },
+    { name: "How It Works", href: "/#how-it-works" },
+  ],
   company: [
     { name: "About", href: "/about" },
-    { name: "Blog", href: "/blog" },
-    { name: "Careers", href: "#" },
-    { name: "Press", href: "#" },
-  ],
-  product: [
-    { name: "Find Therapist", href: "/#therapists" },
-    { name: "Services", href: "/#services" },
-    { name: "Pricing", href: "/pricing" },
-  ],
-  resources: [
-    { name: "Resources", href: "/#resources" },
-    { name: "Help Center", href: "/help" },
+    { name: "Contact", href: "/contact" },
     { name: "FAQ", href: "/#faq" },
   ],
   legal: [
     { name: "Privacy", href: "#" },
     { name: "Terms", href: "#" },
-    { name: "Cookies", href: "#" },
-    { name: "Compliance", href: "#" },
   ],
 }
 
@@ -69,7 +61,7 @@ export function Footer() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
             <Link href="/" className="flex items-center gap-2 mb-6">
@@ -84,7 +76,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-thera-muted text-sm mb-6 max-w-xs">
-              The all-in-one practice management platform for therapists and mental health professionals in Kenya and beyond.
+              A free directory where therapists list themselves — clients contact them directly.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -102,37 +94,23 @@ export function Footer() {
 
           {/* Link Columns */}
           <div>
+            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-thera-muted">Marketplace</h4>
+            <ul className="space-y-3">
+              {footerLinks.marketplace.map((link) => (
+                <li key={link.name}>
+                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
+                    {link.name}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-thera-muted">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
-                    {link.name}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-thera-muted">Product</h4>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
-                    {link.name}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-thera-muted">Resources</h4>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link href={link.href} className="text-sm text-thera-muted hover:text-thera-text transition-colors flex items-center gap-1 group">
                     {link.name}

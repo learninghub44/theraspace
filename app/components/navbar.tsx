@@ -5,16 +5,14 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   Menu, X, Moon, Sun, ChevronDown, 
-  Shield, Sparkles, BookOpen, Users, Phone
+  Shield, Sparkles, Users, Phone
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { cn } from "@/app/lib/utils"
 
 const navLinks = [
   { name: "Find Therapist", href: "#therapists", icon: Users },
-  { name: "Services", href: "#services", icon: Sparkles },
-  { name: "Resources", href: "#resources", icon: BookOpen },
-  { name: "Pricing", href: "/pricing", icon: null },
+  { name: "How It Works", href: "#how-it-works", icon: Sparkles },
   { name: "About", href: "/about", icon: null },
   { name: "Contact", href: "/contact", icon: Phone },
 ]

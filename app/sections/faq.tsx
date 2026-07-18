@@ -7,84 +7,28 @@ import { cn } from "@/app/lib/utils"
 
 const faqs = [
   {
-    question: "What is TheraSpace and who is it for?",
-    answer: "TheraSpace is an all-in-one practice management platform designed specifically for therapists, counselors, psychologists, and mental health clinics. It helps you manage appointments, client records, clinical notes, secure messaging, and AI-assisted documentation — all in one secure platform.",
+    question: "Is TheraSpace free?",
+    answer: "Yes. Listing yourself as a therapist is free, and browsing the directory is free. We don't charge fees on sessions you book.",
   },
   {
-    question: "How does the 14-day free trial work?",
-    answer: "You get full access to every feature for 14 days without entering payment details. After the trial, you can subscribe via Paystack using M-Pesa, card, or bank transfer. No contracts, cancel anytime.",
+    question: "Do you handle bookings or payments?",
+    answer: "No. TheraSpace is a directory — you contact a therapist directly by phone or email and arrange sessions and payment between yourselves.",
   },
   {
-    question: "Is my client data secure?",
-    answer: "Absolutely. TheraSpace is built on Supabase with enterprise-grade security including Row Level Security (RLS), AES-256 encryption at rest, encrypted file uploads, audit logs, and session security. We are GDPR and Kenya Data Protection Act compliant.",
+    question: "How are therapists verified?",
+    answer: "Every listing is reviewed by our team before it goes live. We check the qualifications and details a therapist submits before approving their profile.",
   },
   {
-    question: "How does the AI note generation work?",
-    answer: "Powered by Groq AI, our system can generate SOAP, DAP, and BIRP notes from session summaries or transcripts. The AI never diagnoses or replaces professional judgment — it simply drafts structured notes that you review and approve before saving.",
+    question: "How do I list myself as a therapist?",
+    answer: "Create an account, then fill in your profile — specialty, qualifications, languages, location, pricing, and how clients can reach you. It goes live once approved.",
   },
   {
-    question: "Can I use TheraSpace for a group practice or clinic?",
-    answer: "Yes! TheraSpace supports multi-tenant architecture where each therapist has their own secure workspace. Clinic administrators can oversee operations, manage billing, and generate reports while maintaining complete data isolation between therapists.",
+    question: "Can I edit my listing later?",
+    answer: "Yes, anytime from your dashboard. Edits to an already-approved listing are briefly re-reviewed before going back live.",
   },
   {
-    question: "What note formats are supported?",
-    answer: "TheraSpace supports SOAP (Subjective, Objective, Assessment, Plan), DAP (Data, Assessment, Plan), and BIRP (Behavior, Intervention, Response, Plan) note formats. You can also create custom templates.",
-  },
-  {
-    question: "Do clients get their own portal?",
-    answer: "Yes, every client gets a secure portal where they can book appointments, view their schedule, track mood, write journal entries, complete assessments, and message their therapist securely.",
-  },
-  {
-    question: "Can I export my data?",
-    answer: "Yes, you can export all your data including client records, notes, appointments, and reports in various formats (PDF, CSV, Excel) at any time. Your data belongs to you.",
-  },
-  {
-    question: "What payment methods are accepted?",
-    answer: "We accept payments via Paystack, which supports M-Pesa, Visa/Mastercard, and bank transfers. All payments are processed securely in Kenyan Shillings (KES).",
-  },
-  {
-    question: "Is there a mobile app?",
-    answer: "TheraSpace is fully responsive and works beautifully on mobile browsers. A native mobile app is currently in development and will be available for iOS and Android soon.",
-  },
-  {
-    question: "How do I get support?",
-    answer: "We offer email support for all subscribers. Our help center includes comprehensive documentation, video tutorials, and FAQs. Enterprise customers get priority support with dedicated account managers.",
-  },
-  {
-    question: "Can I integrate with other tools?",
-    answer: "We are working on integrations with popular tools like Google Calendar, Zoom, and WhatsApp Business. Our API will be available soon for custom integrations.",
-  },
-  {
-    question: "What happens if I cancel my subscription?",
-    answer: "You can cancel anytime with no penalties. Your data will be retained for 30 days after cancellation, giving you time to export everything. After 30 days, data is permanently deleted.",
-  },
-  {
-    question: "Is TheraSpace compliant with healthcare regulations?",
-    answer: "TheraSpace is designed to be HIPAA-ready and compliant with the Kenya Data Protection Act 2019. We implement privacy-by-design principles, data minimization, and provide tools for consent management and data deletion requests.",
-  },
-  {
-    question: "How does the mood tracking feature work?",
-    answer: "Clients can log their mood daily using a simple scale or detailed entry. The system visualizes trends over time, identifies patterns, and alerts therapists to significant changes. All data is encrypted and only visible to the client and their therapist.",
-  },
-  {
-    question: "Can receptionists use the system?",
-    answer: "Yes! We have a dedicated receptionist dashboard for managing check-ins, scheduling, payments, and waiting room displays. Receptionists have limited access based on role permissions set by the clinic admin.",
-  },
-  {
-    question: "What is the uptime guarantee?",
-    answer: "Built on Supabase infrastructure, TheraSpace targets 99.9% uptime. We use geographic redundancy, automatic backups, and real-time monitoring to ensure your practice never stops.",
-  },
-  {
-    question: "Do you offer discounts for nonprofits or NGOs?",
-    answer: "Yes! We offer special pricing for registered nonprofits, NGOs, and community mental health organizations. Contact us to learn more about our social impact program.",
-  },
-  {
-    question: "How do I migrate from my current system?",
-    answer: "We offer free data migration assistance. Our team will help you export data from your current system and import it into TheraSpace. Most migrations are completed within 48 hours.",
-  },
-  {
-    question: "Can I customize the platform for my clinic's brand?",
-    answer: "Yes! You can customize colors, logos, email templates, and client-facing pages to match your clinic's brand identity. White-label options are available for enterprise plans.",
+    question: "Is my information secure?",
+    answer: "Your account is protected with standard authentication, and only approved listing details are shown publicly.",
   },
 ]
 

@@ -25,11 +25,11 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "TheraSpace — Run Your Therapy Practice, Not Your Paperwork",
+    default: "TheraSpace — Find a Therapist in Kenya",
     template: "%s | TheraSpace",
   },
-  description: "TheraSpace is the all-in-one practice management platform for therapists, clinics, and mental health professionals. Manage appointments, clients, AI notes, secure messaging, and more.",
-  keywords: ["therapy practice management", "therapist software", "mental health platform", "clinic management", "SOAP notes", "AI therapy assistant", "appointment scheduling", "Kenya"],
+  description: "A free directory of therapists across Kenya. Browse verified listings and contact a therapist directly — no booking fees, no middleman.",
+  keywords: ["find a therapist Kenya", "therapist directory", "mental health support Kenya", "counseling Nairobi", "therapy marketplace"],
   authors: [{ name: "TheraSpace" }],
   creator: "TheraSpace",
   metadataBase: new URL("https://mytherapist.christech.co.ke"),
@@ -41,21 +41,21 @@ export const metadata: Metadata = {
     locale: "en_KE",
     url: "https://mytherapist.christech.co.ke",
     siteName: "TheraSpace",
-    title: "TheraSpace — Run Your Therapy Practice, Not Your Paperwork",
-    description: "The all-in-one practice management platform for therapists and mental health professionals.",
+    title: "TheraSpace — Find a Therapist in Kenya",
+    description: "A free directory of therapists across Kenya — browse listings and contact a therapist directly.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "TheraSpace Dashboard",
+        alt: "TheraSpace therapist directory",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TheraSpace — Run Your Therapy Practice, Not Your Paperwork",
-    description: "The all-in-one practice management platform for therapists and mental health professionals.",
+    title: "TheraSpace — Find a Therapist in Kenya",
+    description: "A free directory of therapists across Kenya — browse listings and contact a therapist directly.",
     images: ["/og-image.jpg"],
   },
   robots: {
