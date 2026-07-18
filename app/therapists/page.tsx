@@ -5,6 +5,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Search, Loader2, SlidersHorizontal, X, MapPin, ChevronDown } from "lucide-react"
 import { supabase } from "@/app/lib/supabase"
+import { cachedQuery } from "@/app/lib/query-cache"
 import { TherapistCard } from "@/app/components/therapist-card"
 import { KENYA_LOCATIONS, REMOTE_OPTION } from "@/app/lib/locations"
 import type { TherapistProfile } from "@/types"
@@ -82,35 +83,46 @@ export default function TherapistsDirectoryPage() {
 
   const runQuery = useCallback(
     async (targetPage: number) => {
-      let q = supabase
-        .from("therapist_profiles")
-        .select("*", { count: "exact" })
-        .eq("status", "approved")
-
       const term = sanitizeForOr(debouncedQuery)
-      if (term) {
-        q = q.or(
-          `full_name.ilike.%${term}%,specialty.ilike.%${term}%,bio.ilike.%${term}%,languages.ilike.%${term}%,qualifications.ilike.%${term}%`
-        )
-      }
-      if (category) {
-        q = q.ilike("specialty", `%${category}%`)
-      }
-      if (debouncedLocation.trim() === REMOTE_OPTION) {
-        q = q.contains("session_modes", ["video"])
-      } else if (debouncedLocation.trim()) {
-        q = q.ilike("location", `%${debouncedLocation.trim()}%`)
-      }
-      if (sessionMode) {
-        q = q.contains("session_modes", [sessionMode])
-      }
+      const cacheKey = [
+        "therapists",
+        term,
+        category ?? "",
+        debouncedLocation.trim(),
+        sessionMode ?? "",
+        targetPage,
+      ].join(":")
 
-      const from = 0
-      const to = targetPage * PAGE_SIZE - 1
-      q = q.order("created_at", { ascending: false }).range(from, to)
+      return cachedQuery(cacheKey, async () => {
+        let q = supabase
+          .from("therapist_profiles")
+          .select("*", { count: "exact" })
+          .eq("status", "approved")
 
-      const { data, error: queryError, count } = await q
-      return { data: (data ?? []) as TherapistProfile[], error: queryError, count: count ?? 0 }
+        if (term) {
+          q = q.or(
+            `full_name.ilike.%${term}%,specialty.ilike.%${term}%,bio.ilike.%${term}%,languages.ilike.%${term}%,qualifications.ilike.%${term}%`
+          )
+        }
+        if (category) {
+          q = q.ilike("specialty", `%${category}%`)
+        }
+        if (debouncedLocation.trim() === REMOTE_OPTION) {
+          q = q.contains("session_modes", ["video"])
+        } else if (debouncedLocation.trim()) {
+          q = q.ilike("location", `%${debouncedLocation.trim()}%`)
+        }
+        if (sessionMode) {
+          q = q.contains("session_modes", [sessionMode])
+        }
+
+        const from = 0
+        const to = targetPage * PAGE_SIZE - 1
+        q = q.order("created_at", { ascending: false }).range(from, to)
+
+        const { data, error: queryError, count } = await q
+        return { data: (data ?? []) as TherapistProfile[], error: queryError, count: count ?? 0 }
+      })
     },
     [debouncedQuery, category, debouncedLocation, sessionMode]
   )

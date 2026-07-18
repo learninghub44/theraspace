@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { Loader2, ArrowRight } from "lucide-react"
 import { supabase } from "@/app/lib/supabase"
+import { cachedQuery } from "@/app/lib/query-cache"
 import { TherapistCard } from "@/app/components/therapist-card"
 import type { TherapistProfile } from "@/types"
 
@@ -14,18 +15,26 @@ export function TherapistMarketplaceSection() {
   const [therapists, setTherapists] = useState<TherapistProfile[]>([])
   const [totalCount, setTotalCount] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let active = true
-    supabase
-      .from("therapist_profiles")
-      .select("*", { count: "exact" })
-      .eq("status", "approved")
-      .order("created_at", { ascending: false })
-      .limit(PREVIEW_COUNT)
-      .then(({ data, error, count }) => {
+    setError(null)
+    cachedQuery(`featured-therapists:${PREVIEW_COUNT}`, async () =>
+      supabase
+        .from("therapist_profiles")
+        .select("*", { count: "exact" })
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(PREVIEW_COUNT)
+    )
+      .then(({ data, error: queryError, count }) => {
         if (!active) return
-        if (!error && data) setTherapists(data as TherapistProfile[])
+        if (queryError) {
+          setError("Couldn't load therapists right now. Please try again shortly.")
+        } else if (data) {
+          setTherapists(data as TherapistProfile[])
+        }
         setTotalCount(count ?? null)
         setLoading(false)
       })
@@ -61,6 +70,10 @@ export function TherapistMarketplaceSection() {
         {loading ? (
           <div className="flex items-center justify-center gap-2 text-thera-muted text-sm py-12">
             <Loader2 className="w-4 h-4 animate-spin" /> Loading therapists...
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-thera-danger">{error}</p>
           </div>
         ) : therapists.length === 0 ? (
           <div className="text-center py-12">

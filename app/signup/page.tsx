@@ -6,6 +6,14 @@ import { motion } from "framer-motion"
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle } from "lucide-react"
 import { supabase, getSiteUrl } from "@/app/lib/supabase"
 
+const PASSWORD_REQUIREMENTS = [
+  { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
+  { label: "One lowercase letter", test: (p: string) => /[a-z]/.test(p) },
+  { label: "One uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
+  { label: "One number", test: (p: string) => /[0-9]/.test(p) },
+  { label: "One symbol (!@#$%...)", test: (p: string) => /[^a-zA-Z0-9]/.test(p) },
+]
+
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -23,6 +31,12 @@ export default function SignupPage() {
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.")
+      return
+    }
+
+    const unmet = PASSWORD_REQUIREMENTS.filter((r) => !r.test(password))
+    if (unmet.length > 0) {
+      setError("Password doesn't meet the requirements below.")
       return
     }
 
@@ -160,6 +174,24 @@ export default function SignupPage() {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              {password && (
+                <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1">
+                  {PASSWORD_REQUIREMENTS.map((r) => {
+                    const met = r.test(password)
+                    return (
+                      <li
+                        key={r.label}
+                        className={`text-xs flex items-center gap-1.5 ${
+                          met ? "text-thera-success" : "text-thera-muted"
+                        }`}
+                      >
+                        <CheckCircle2 className={`w-3.5 h-3.5 ${met ? "opacity-100" : "opacity-30"}`} />
+                        {r.label}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div>
